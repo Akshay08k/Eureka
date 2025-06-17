@@ -3,7 +3,8 @@ import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import CredintialProvider from "next-auth/providers/credentials";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
-import clientPromise from "./dbCon";
+import clientPromise from "./clientPromise";
+import connectDB from "./dbCon" ;
 import User from "@/models/User";
 import bcrypt from "bcrypt";
 
@@ -27,6 +28,7 @@ export const authOptions:AuthOptions = {
                 password: { label: "Password", type: "password" },
             },
             async authorize(credentials){
+                await connectDB();
                 const user = await User.findOne({email:credentials?.email});
                 if(!user){
                     throw new Error("User not found")
