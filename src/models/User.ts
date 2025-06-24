@@ -1,11 +1,18 @@
-import  { Schema, model, models } from "mongoose";
-
+import  mongoose, { Schema, model, models } from "mongoose";
+const onBoardingSchema = new Schema({
+  completed: { type: Boolean, default: false },
+  currentStep: { type: Number, default: 0 },
+}, { _id: false });
 const UserSchema = new Schema({
-  name: String,
-  email: { type: String, unique: true },
-  password: String, // Only for credentials provider
-  image: String,
-});
+  username: { type: String, unique: true },
+  //display name
+  name: {type: String},
+  email: { type: String, unique: true},
+  password: { type: String, required: true}, 
+  profileImageUrl: {type: String},
+  role:{type:String,enum:["student","faculty","admin"],default:"student"},
+  onboarding:{type:onBoardingSchema,default:() => ({})},
+},{timestamps:true});
 
 const User = models.User || model("User", UserSchema);
-export default User;
+export default User

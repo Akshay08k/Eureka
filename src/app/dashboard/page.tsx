@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../lib/Auth";
 import { redirect } from "next/navigation";
 import Image from "next/image";
-import LogoutButton from "../LogoutButton/page";
+import LogoutButton from "../components/client-components/LogoutButton/page";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
