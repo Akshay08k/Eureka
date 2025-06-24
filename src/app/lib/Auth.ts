@@ -29,7 +29,9 @@ export const authOptions: AuthOptions = {
       async authorize(credentials) {
         await connectDB();
 
-        const user = await User.findOne({ email: credentials?.email });
+        const user = await User.findOne({ email: credentials?.email }).select(
+          "+password"
+        );
         if (!user) {
           throw new Error("User not found");
         }

@@ -1,22 +1,13 @@
 "use client";
 
-import { signIn, getProviders } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { FaGoogle, FaGithub } from "react-icons/fa";
-
+import { signIn } from "next-auth/react";
+import ProviderBtns from "../components/ProviderBtns";
 export default function SignInPage() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
-  const [providers, setProviders] = useState<any>(null);
   const router = useRouter();
-
-  useEffect(() => {
-    (async () => {
-      const res = await getProviders();
-      setProviders(res);
-    })();
-  }, []);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -104,42 +95,9 @@ export default function SignInPage() {
             </button>
           </form>
 
-          {/* Divider */}
-          {providers &&
-            Object.values(providers).filter(
-              (provider: any) => provider.id !== "credentials"
-            ).length > 0 && (
-              <div className="flex items-center my-6">
-                <div className="flex-1 h-px bg-white/20"></div>
-                <span className="px-4 text-gray-400 text-sm">
-                  or continue with
-                </span>
-                <div className="flex-1 h-px bg-white/20"></div>
-              </div>
-            )}
-
-          {/* OAuth Providers */}
-          <div className="space-y-3">
-            {providers &&
-              Object.values(providers)
-                .filter((provider: any) => provider.id !== "credentials")
-                .map((provider: any) => (
-                  <button
-                    key={provider.name}
-                    onClick={() =>
-                      signIn(provider.id, { callbackUrl: "/dashboard" })
-                    }
-                    className="w-full py-3 bg-white/10 border border-white/20 text-white rounded-lg font-medium hover:bg-white/15 transform hover:scale-[1.02] transition-all duration-200 backdrop-blur-sm flex items-center justify-center space-x-2"
-                  >
-                    {provider.name === "Google" && <FaGoogle size={20} />}
-                    {provider.name === "GitHub" && <FaGithub size={20} />}
-                    <span>Continue with {provider.name}</span>
-                  </button>
-                ))}
-          </div>
+          <ProviderBtns />
         </div>
 
-        {/* Sign up link */}
         <p className="text-center mt-6 text-gray-400">
           Don't have an account?{" "}
           <a

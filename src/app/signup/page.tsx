@@ -1,12 +1,10 @@
 "use client";
-
 import { signIn, getProviders } from "next-auth/react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaGoogle, FaGithub } from "react-icons/fa";
+import ProviderBtns from "../components/ProviderBtns";
 
 export default function SignupPage() {
-  const [providers, setProviders] = useState<any>(null);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -16,33 +14,11 @@ export default function SignupPage() {
   const router = useRouter();
   const [Loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      const res = await getProviders();
-      setProviders(res);
-    })();
-  }, []);
-
   const handleSignup = async (e: any) => {
     e.preventDefault();
 
     try {
-      const res = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-          username: formData.username,
-        }),
-      });
-      setLoading(true);
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.message || "Signup failed");
-
-      // Auto login after signup
-      await signIn("credentials", {
+      const res = await signIn("credentials", {
         redirect: false,
         email: formData.email,
         password: formData.password,
@@ -122,46 +98,9 @@ export default function SignupPage() {
             </button>
           </form>
 
-          {/* Divider */}
-          {providers &&
-            Object.values(providers).filter(
-              (provider: any) => provider.id !== "credentials"
-            ).length > 0 && (
-              <div className="flex items-center my-6">
-                <div className="flex-1 h-px bg-white/20"></div>
-                <span className="px-4 text-gray-400 text-sm">
-                  or continue with
-                </span>
-                <div className="flex-1 h-px bg-white/20"></div>
-              </div>
-            )}
-
-          {/* OAuth Signup Buttons */}
-          <div className="space-y-3">
-            {providers &&
-              Object.values(providers)
-                .filter((provider: any) => provider.id !== "credentials")
-                .map((provider: any) => (
-                  <button
-                    key={provider.name}
-                    onClick={() =>
-                      signIn(provider.id, { callbackUrl: "/dashboard" })
-                    }
-                    className="w-full py-3 bg-white/10 border border-white/20 text-white rounded-lg font-medium hover:bg-white/15 transform hover:scale-[1.02] transition-all duration-200 backdrop-blur-sm flex items-center justify-center space-x-2"
-                  >
-                    {provider.name === "Google" && (
-                      <FaGoogle className="w-6 h-6" />
-                    )}
-                    {provider.name === "GitHub" && (
-                      <FaGithub className="w-6 h-6" />
-                    )}
-                    <span>Continue with {provider.name}</span>
-                  </button>
-                ))}
-          </div>
+          <ProviderBtns />
         </div>
 
-        {/* Sign in link */}
         <p className="text-center mt-6 text-gray-400">
           Already have an account?{" "}
           <a
