@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import LogoutButton from "../components/LogoutBtn";
 
-export default async function DashboardPage() {
+export default async function DashboardPage() { 
   const session = await getServerSession(authOptions);
 
   if (!session) redirect("/signin");
@@ -14,7 +14,7 @@ export default async function DashboardPage() {
       <div className="bg-gray-800 shadow-lg rounded-2xl p-8 max-w-md w-full text-center space-y-6 border border-gray-700">
         <Image
           className="w-24 h-24 rounded-full mx-auto border-4 border-blue-500 shadow-md"
-          src={session.user?.image || "/vercel.svg"}
+          src={session.user?.image ?? ""}
           alt={session.user?.name ?? "User"}
           width={96}
           height={96}

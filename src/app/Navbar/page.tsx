@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { IoMdMenu } from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
-
+import { useSession } from "next-auth/react";
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-
+  const { data: session } = useSession();
+  console.log(session);
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Forum", href: "/forum" },
@@ -20,7 +21,6 @@ export default function Navbar() {
       <div className="bg-black/90 backdrop-blur-lg border border-purple-500/20 rounded-2xl shadow-2xl max-w-6xl mx-auto">
         <div className="px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            {/* Logo */}
             <div className="flex items-center space-x-3">
               <div className="relative text-center text-2xl font-bold bg-gradient-to-r from-indigo-200 to-indigo-400 bg-clip-text text-transparent">
                 Eureka
@@ -28,7 +28,6 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Desktop Links */}
             <div className="hidden md:flex space-x-8">
               {navLinks.map((link) => (
                 <a
@@ -42,9 +41,7 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Right Profile & Menu */}
             <div className="flex items-center space-x-4">
-              {/* Avatar */}
               <div className="relative group">
                 <img
                   src="/avatar.png"
@@ -54,7 +51,6 @@ export default function Navbar() {
                 <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-400 rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-300 blur"></div>
               </div>
 
-              {/* Mobile Menu Toggle */}
               <button
                 className="md:hidden text-white/80 hover:text-white text-xl transition-colors duration-300"
                 onClick={() => setMobileOpen(!mobileOpen)}
@@ -65,7 +61,6 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         {mobileOpen && (
           <div className="md:hidden border-t border-purple-500/20 px-6 py-4 bg-black/95 rounded-b-2xl">
             <div className="space-y-3">

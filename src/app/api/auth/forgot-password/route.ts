@@ -3,6 +3,7 @@ import ResetToken from "@/models/ResetToken";
 import User from "@/models/User";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
+import ResponseCache from "next/dist/server/response-cache";
 
 export async function POST(req: Request) {
   await dbConnect();

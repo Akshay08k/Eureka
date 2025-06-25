@@ -10,11 +10,17 @@ export default function SignInPage() {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const res = await axios.post("/api/auth/forgot-password", { email });
-    const data = res.data;
-
-    if (data.error) setError(data.error);
-    console.log(email);
+    try {
+      const res = await axios.post("/api/auth/forgot-password", {
+        email,
+      });
+      console.log(res)
+      if (res.status === 200) {
+        setMessage("Password reset link sent to your email. Check your inbox.");
+      }
+    } catch (err: any) {
+      setError(err.response?.data || "Something went wrong.");
+    }
   };
 
   return (

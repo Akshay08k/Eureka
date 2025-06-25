@@ -3,6 +3,7 @@ import { signIn, getProviders } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ProviderBtns from "../components/ProviderBtns";
+import axios from "axios";
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -18,15 +19,32 @@ export default function SignupPage() {
     e.preventDefault();
 
     try {
-      const res = await signIn("credentials", {
+      setLoading(true);
+      const res = await axios.post("/api/auth/register", formData);
+
+      const data = await res.data;
+      console.log(data);
+
+      if (res.status !== 200) {
+        throw new Error(data.message || "Something went wrong!");
+      }
+
+
+      const loginRes = await signIn("credentials", {
         redirect: false,
         email: formData.email,
         password: formData.password,
       });
 
-      router.push("/dashboard");
+      if (loginRes?.ok) {
+        // router.push("/dashboard");
+      } else {
+        setError("Login failed after signup");
+      }
     } catch (err: any) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
