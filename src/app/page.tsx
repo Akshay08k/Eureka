@@ -1,11 +1,12 @@
 import React from "react";
-import Navbar from "./Navbar/page";
+
+import Dashboard from "./dashboard/page";
 
 const page = () => {
   return (
     <>
       <div className="bg-black min-h-screen">
-        <Navbar />
+        <Dashboard />
       </div>
     </>
   );

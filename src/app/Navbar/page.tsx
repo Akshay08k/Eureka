@@ -4,27 +4,28 @@ import { useState } from "react";
 import { IoMdMenu } from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { data: session } = useSession();
-  console.log(session);
+
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Forum", href: "/forum" },
+    { name: "Forum", href: "/forums" },
     { name: "Resources", href: "/resources" },
     { name: "Groups", href: "/groups" },
     { name: "Roadmaps", href: "/roadmaps" },
   ];
 
   return (
-    <nav className="fixed top-4 left-4 right-4  z-50">
-      <div className="bg-black/90 backdrop-blur-lg border border-purple-500/20 rounded-2xl shadow-2xl max-w-6xl mx-auto">
+    <nav className="fixed top-6 left-4 right-4 z-50">
+      <div className="bg-[#1f1f1f]/70 backdrop-blur-md  rounded-2xl shadow-2xl max-w-6xl mx-auto">
         <div className="px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
               <div className="relative text-center text-2xl font-bold bg-gradient-to-r from-indigo-200 to-indigo-400 bg-clip-text text-transparent">
-                Eureka
-                <div className="absolute -inset-1 bg-purple-500/20 rounded-full blur-sm"></div>
+                <Link href="/">Eureka</Link>
               </div>
             </div>
 
@@ -43,11 +44,14 @@ export default function Navbar() {
 
             <div className="flex items-center space-x-4">
               <div className="relative group">
-                <img
-                  src="/avatar.png"
-                  alt="Profile"
-                  className="h-10 w-10 rounded-full border-2 border-purple-500 hover:border-purple-400 transition-all duration-300 cursor-pointer"
+                <Image
+                  src={session?.user?.image || "/vercel.svg"}
+                  alt="User Avatar"
+                  width={40}
+                  height={40}
+                  className="h-10 w-10 rounded-full border-2hover:border-purple-400 transition-all duration-300 cursor-pointer"
                 />
+
                 <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-400 rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-300 blur"></div>
               </div>
 
