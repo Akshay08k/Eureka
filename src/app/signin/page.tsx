@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import ProviderBtns from "../components/ProviderBtns";
 export default function SignInPage() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -21,9 +22,18 @@ export default function SignInPage() {
     if (res?.error) {
       setError("Invalid email or password");
     } else {
-      router.push("/dashboard");
+      router.push("/");
     }
   };
+
+  useEffect(() => {
+    const error = searchParams.get("error");
+    if (error === "CredentialsSignin") {
+      setError("Invalid email or password");
+    } else if (error === "Unauthorized") {
+      setError("Please Login first");
+    }
+  }, [searchParams]);
 
   return (
     <div className="min-h-screen bg-black 800 flex items-center justify-center px-4 relative overflow-hidden">

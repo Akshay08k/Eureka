@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import {
   FiMessageSquare,
   FiFileText,
@@ -23,6 +24,7 @@ import {
 
 const Dashboard = () => {
   const [currentDate, setCurrentDate] = useState("");
+  const { data: session } = useSession();
 
   useEffect(() => {
     const today = new Date();
@@ -185,7 +187,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="bg-gradient-to-br from-[#1f1f1f] via-[#2b2b2b] to-[#0f0f0f] min-h-screen  pt-26 pb-8 px-4 sm:px-6 lg:px-8">
+    <div className="bg-gray-900 min-h-screen  pt-26 pb-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-[1200px] mx-auto">
         {/* Welcome Section */}
         <div className="mb-8">
@@ -197,7 +199,7 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <h1 className="text-2xl sm:text-3xl font-bold text-white">
-                    Welcome back, Akshay 👋
+                    Welcome back,{session?.user?.name || "User"} 👋
                   </h1>
                   <div className="flex items-center mt-2 space-x-2">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-900/50 text-purple-300 border border-purple-700/50">

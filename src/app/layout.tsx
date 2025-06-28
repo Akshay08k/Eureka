@@ -3,10 +3,13 @@ import { Geist } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./lib/Providers";
 import Navbar from "./Navbar/page";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/lib/Auth"; // adjust path if needed
 
 const geist = Geist({
   subsets: ["latin"],
   variable: "--font-geist",
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -14,16 +17,19 @@ export const metadata: Metadata = {
   description: "A platform for learning and sharing knowledge",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang="en">
-      <body className={`${geist.className}  antialiased`}>
+      <body className={`${geist.className} antialiased`}>
         <Providers>
-          <Navbar />
+          {/* ✅ Only render Navbar if user is logged in */}
+          {session && <Navbar />}
           {children}
         </Providers>
       </body>

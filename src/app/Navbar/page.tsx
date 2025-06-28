@@ -4,6 +4,7 @@ import { useState } from "react";
 import { IoMdMenu } from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
 import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 export default function Navbar() {
@@ -45,7 +46,10 @@ export default function Navbar() {
             <div className="flex items-center space-x-4">
               <div className="relative group">
                 <Image
-                  src={session?.user?.image || "/vercel.svg"}
+                  src={
+                    session?.user?.image ||
+                    "https://avatars.githubusercontent.com/u/96125015?v=4"
+                  }
                   alt="User Avatar"
                   width={40}
                   height={40}
@@ -54,9 +58,15 @@ export default function Navbar() {
 
                 <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-400 rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-300 blur"></div>
               </div>
+              <button
+                className="bg-red-400 text-white/80 hover:text-white font-medium transition-all duration-300 py-2 px-2 rounded-lg hover:bg-purple-500/10"
+                onClick={() => signOut({ callbackUrl: "/signin" })}
+              >
+                logout
+              </button>
 
               <button
-                className="md:hidden text-white/80 hover:text-white text-xl transition-colors duration-300"
+                className="md:hidden  text-white/80 hover:text-white text-xl transition-colors duration-300"
                 onClick={() => setMobileOpen(!mobileOpen)}
               >
                 {mobileOpen ? <IoCloseSharp /> : <IoMdMenu />}

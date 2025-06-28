@@ -49,7 +49,6 @@ interface Reply {
   likes: number;
   isLiked: boolean;
 }
-
 // Sample data with dark mode tag colors
 const sampleTags: Tag[] = [
   {
