@@ -42,7 +42,7 @@ export const authOptions: AuthOptions = {
         if (!isValid) {
           throw new Error("Invalid password");
         }
-        
+
         return {
           id: user._id.toString(), // make sure it's string
           name: user.name,
