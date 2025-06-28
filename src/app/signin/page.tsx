@@ -51,7 +51,7 @@ export default function SignInPage() {
         {/* Main card */}
         <div className="backdrop-blur-xl bg-black border border-gray-800 rounded-2xl p-8 shadow-2xl">
           <h2 className="text-2xl font-semibold text-white text-center mb-6">
-            Sign in to your account
+            Sign in to your Account
           </h2>
 
           {error && (
