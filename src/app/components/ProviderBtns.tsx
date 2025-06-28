@@ -31,9 +31,7 @@ export default function ProviderBtns() {
             .map((provider: any) => (
               <button
                 key={provider.name}
-                onClick={() =>
-                  signIn(provider.id, { callbackUrl: "/dashboard" })
-                }
+                onClick={() => signIn(provider.id, { callbackUrl: "/" })}
                 className="w-full py-3 bg-white/10 border border-white/20 text-white rounded-lg font-medium hover:bg-white/15 transform hover:scale-[1.02] transition-all duration-200 backdrop-blur-sm flex items-center justify-center space-x-2"
               >
                 {provider.name === "Google" && <FaGoogle className="w-6 h-6" />}
