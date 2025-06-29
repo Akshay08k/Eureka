@@ -3,8 +3,7 @@
 import { useState } from "react";
 import { IoMdMenu } from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
-import { useSession } from "next-auth/react";
-import { signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 export default function Navbar() {
@@ -59,10 +58,10 @@ export default function Navbar() {
                 <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-400 rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-300 blur"></div>
               </div>
               <button
-                className="bg-red-400 text-white/80 hover:text-white font-medium transition-all duration-300 py-2 px-2 rounded-lg hover:bg-purple-500/10"
                 onClick={() => signOut({ callbackUrl: "/signin" })}
+                className="px-4 py-2 bg-red-400 hover:bg-red-700 text-black rounded-lg transition duration-200"
               >
-                logout
+                Logout
               </button>
 
               <button

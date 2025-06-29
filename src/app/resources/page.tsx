@@ -11,6 +11,7 @@ import {
   FiImage,
 } from "react-icons/fi";
 import { AiFillFilePdf, AiFillFileWord, AiFillFilePpt } from "react-icons/ai";
+import FileUpload from "../components/UploadFile";
 
 interface Resource {
   id: string;
@@ -27,6 +28,7 @@ const ResourcesPage: React.FC = () => {
   const [selectedFileType, setSelectedFileType] = useState<string>("all");
   const [sortOrder, setSortOrder] = useState<string>("newest");
   const [showFilters, setShowFilters] = useState<boolean>(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   // Mock data
   const resources: Resource[] = [
@@ -133,7 +135,8 @@ const ResourcesPage: React.FC = () => {
     });
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-gray-900 pt-20">
+      <FileUpload isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
       {/* Main Content */}
       <div className="pt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -147,7 +150,10 @@ const ResourcesPage: React.FC = () => {
                 Access, upload, and explore shared academic materials
               </p>
             </div>
-            <button className="mt-4 sm:mt-0 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center space-x-2 shadow-sm hover:shadow-lg hover:shadow-indigo-500/25">
+            <button
+              onClick={() => setIsPopupOpen(true)}
+              className="mt-4 sm:mt-0 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center space-x-2 shadow-sm hover:shadow-lg hover:shadow-indigo-500/25"
+            >
               <FiUpload className="text-sm" />
               <span>Upload Resource</span>
             </button>
@@ -175,7 +181,7 @@ const ResourcesPage: React.FC = () => {
                 <select
                   value={selectedSubject}
                   onChange={(e) => setSelectedSubject(e.target.value)}
-                  className="border border-gray-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-500 bg-gray-800 text-gray-200"
+                  className="outline outline-gray-600  rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-500 bg-gray-800 text-gray-200"
                 >
                   {subjects.map((subject) => (
                     <option key={subject} value={subject}>
@@ -187,7 +193,7 @@ const ResourcesPage: React.FC = () => {
                 <select
                   value={selectedFileType}
                   onChange={(e) => setSelectedFileType(e.target.value)}
-                  className="border border-gray-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-500 bg-gray-800 text-gray-200"
+                  className="outline outline-gray-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-500 bg-gray-800 text-gray-200"
                 >
                   {fileTypes.map((type) => (
                     <option key={type} value={type}>

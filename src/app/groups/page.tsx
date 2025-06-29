@@ -8,6 +8,7 @@ import {
   FaEye,
   FaUserPlus,
 } from "react-icons/fa";
+import GroupCreation from "../components/GroupCreation";
 interface Group {
   id: string;
   name: string;
@@ -26,6 +27,7 @@ const GroupsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterBy, setFilterBy] = useState("all");
   const [sortBy, setSortBy] = useState("name");
+  const [showGroupCreation, setShowGroupCreation] = useState(false);
 
   const currentUser: User = {
     name: "John Doe",
@@ -181,7 +183,10 @@ const GroupsPage: React.FC = () => {
           ? "Try adjusting your search or filters to find groups."
           : "You haven't joined any groups yet. Start by exploring or creating one!"}
       </p>
-      <button className="inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors">
+      <button
+        onClick={() => setShowGroupCreation(true)}
+        className="inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors"
+      >
         <FaPlus className="w-5 h-5" />
         Create Group
       </button>
@@ -190,6 +195,10 @@ const GroupsPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 pt-20">
+      <GroupCreation
+        isOpen={showGroupCreation}
+        onClose={() => setShowGroupCreation(false)}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
@@ -201,7 +210,10 @@ const GroupsPage: React.FC = () => {
             </p>
           </div>
 
-          <button className="inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-500/25 transition-all duration-200">
+          <button
+            onClick={() => setShowGroupCreation(true)}
+            className="inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-500/25 transition-all duration-200"
+          >
             <FaPlus className="w-5 h-5" />
             Create Group
           </button>
