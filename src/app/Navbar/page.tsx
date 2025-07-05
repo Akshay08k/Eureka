@@ -4,11 +4,16 @@ import { useState } from "react";
 import { IoMdMenu } from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
 import { useSession, signOut } from "next-auth/react";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useTheme } from "next-themes";
+import { FaMoon, FaSun } from "react-icons/fa";
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { data: session } = useSession();
+  const { theme, setTheme } = useTheme();
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -17,10 +22,9 @@ export default function Navbar() {
     { name: "Groups", href: "/groups" },
     { name: "Roadmaps", href: "/roadmaps" },
   ];
-
   return (
-    <nav className="fixed top-6 left-4 right-4 z-50">
-      <div className="bg-[#1f1f1f]/70 backdrop-blur-md  rounded-2xl shadow-2xl max-w-6xl mx-auto">
+    <nav className="fixed top-6 left-4 right-4 z-50 ">
+      <div className="dark:bg-[#1f1f1f]/70 bg-white/70 dark:text-white backdrop-blur-md  rounded-2xl shadow-2xl max-w-6xl mx-auto">
         <div className="px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
@@ -34,7 +38,7 @@ export default function Navbar() {
                 <a
                   key={link.name}
                   href={link.href}
-                  className="relative text-white/80 hover:text-white font-medium transition-all duration-300 group"
+                  className="relative text-black dark:text-white/80 font-medium transition-all duration-300 group"
                 >
                   {link.name}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-purple-600 group-hover:w-full transition-all duration-300"></span>
@@ -54,9 +58,18 @@ export default function Navbar() {
                   height={40}
                   className="h-10 w-10 rounded-full border-2hover:border-purple-400 transition-all duration-300 cursor-pointer"
                 />
-
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-400 rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-300 blur"></div>
               </div>
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="text-white/80 hover:text-white text-xl transition-colors duration-900"
+              >
+                {theme === "dark" ? (
+                  <FaMoon className="w-4 h-4 text-black dark:text-white " />
+                ) : (
+                  <FaSun className="w-4 h-4 text-black dark:text-white" />
+                )}
+              </button>
+
               <button
                 onClick={() => signOut({ callbackUrl: "/signin" })}
                 className="px-4 py-2 bg-red-400 hover:bg-red-700 text-black rounded-lg transition duration-200"

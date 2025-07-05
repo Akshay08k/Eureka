@@ -4,7 +4,7 @@ import "./globals.css";
 import { Providers } from "./lib/Providers";
 import Navbar from "./Navbar/page";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/Auth"; // adjust path if needed
+import { authOptions } from "@/app/lib/Auth"; // adjust path if needed  
 
 const geist = Geist({
   subsets: ["latin"],
@@ -25,10 +25,9 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${geist.className} antialiased`}>
         <Providers>
-          {/* ✅ Only render Navbar if user is logged in */}
           {session && <Navbar />}
           {children}
         </Providers>
