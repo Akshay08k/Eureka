@@ -64,12 +64,12 @@ const ThreadCard: React.FC<{
           </div>
         </div>
 
-        <div className="flex items-center space-x-4 text-sm text-white dark:text-gray-400">
-          <div className="flex items-center hover:text-purple-400 transition-colors">
+        <div className="flex items-center space-x-4 text-sm text-gray-800 dark:text-gray-400">
+          <div className="flex items-center  transition-colors">
             <FiMessageSquare className="w-4 h-4 mr-1" />
             {thread.replies}
           </div>
-          <div className="flex items-center hover:text-purple-400 transition-colors">
+          <div className="flex items-center transition-colors">
             <FiHeart className="w-4 h-4 mr-1" />
             {thread.likes}
           </div>

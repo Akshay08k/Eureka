@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { useTheme } from "next-themes";
 import {
   FiMessageSquare,
   FiFileText,
@@ -26,8 +25,7 @@ import {
 
 const Dashboard = () => {
   const [currentDate, setCurrentDate] = useState("");
-  const { data: session } = useSession();
-  const { theme } = useTheme();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     const today = new Date();
@@ -39,6 +37,10 @@ const Dashboard = () => {
     };
     setCurrentDate(today.toLocaleDateString("en-US", options));
   }, []);
+  
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
 
   const forumActivity = [
     {
@@ -201,7 +203,8 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
-                    Welcome back, {session?.user?.name || "User"} 👋
+                    Welcome back, {session?.user?.name || "User(Not Logged In)"}{" "}
+                    👋
                   </h1>
                   <div className="flex items-center mt-2 space-x-2">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-700">

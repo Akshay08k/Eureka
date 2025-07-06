@@ -4,8 +4,8 @@ import "./globals.css";
 import { Providers } from "./lib/Providers";
 import Navbar from "./Navbar/page";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/Auth"; // adjust path if needed  
-
+import { authOptions } from "@/app/lib/Auth"; // adjust path if needed
+import SessionGuard from "./lib/SessionWrapper";
 const geist = Geist({
   subsets: ["latin"],
   variable: "--font-geist",
@@ -28,8 +28,10 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${geist.className} antialiased`}>
         <Providers>
-          {session && <Navbar />}
-          {children}
+          <SessionGuard>
+            {session && <Navbar />}
+            {children}
+          </SessionGuard>
         </Providers>
       </body>
     </html>

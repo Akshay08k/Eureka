@@ -1,6 +1,6 @@
 // components/Navbar.tsx
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IoMdMenu } from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
 import { useSession, signOut } from "next-auth/react";
@@ -12,8 +12,11 @@ import { FaMoon, FaSun } from "react-icons/fa";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  if (status === "loading") return <div>Loading...</div>;
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -61,10 +64,11 @@ export default function Navbar() {
               </div>
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="text-white/80 hover:text-white text-xl transition-colors duration-900"
+                className="text-white/80 hover:text-white text-xl transition-colors duration-900 dark:bg-white/35 bg-black/10 p-2 rounded-full"
+                title="Toggle between themes"
               >
                 {theme === "dark" ? (
-                  <FaMoon className="w-4 h-4 text-black dark:text-white " />
+                  <FaMoon className="w-4 h-4 text-black dark:text-white" />
                 ) : (
                   <FaSun className="w-4 h-4 text-black dark:text-white" />
                 )}
