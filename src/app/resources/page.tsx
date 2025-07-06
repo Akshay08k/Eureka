@@ -135,7 +135,7 @@ const ResourcesPage: React.FC = () => {
     });
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 pt-20">
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-gray-900 pt-20">
       <FileUpload isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
       {/* Main Content */}
       <div className="pt-16">

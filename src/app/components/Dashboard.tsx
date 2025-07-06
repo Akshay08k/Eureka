@@ -185,7 +185,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="bg-white dark:bg-gray-900 min-h-screen pt-26 pb-8 px-4 sm:px-6 lg:px-8">
+    <div className="bg-[#F8FAFC] dark:bg-gray-900 min-h-screen pt-26 pb-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-[1200px] mx-auto">
         {/* Welcome Section */}
         <div className="mb-8">

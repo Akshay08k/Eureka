@@ -12,7 +12,7 @@ import { FaMoon, FaSun } from "react-icons/fa";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const { theme, setTheme } = useTheme();
 
   const navLinks = [
@@ -24,7 +24,7 @@ export default function Navbar() {
   ];
   return (
     <nav className="fixed top-6 left-4 right-4 z-50 ">
-      <div className="dark:bg-[#1f1f1f]/70 bg-white/70 dark:text-white backdrop-blur-md  rounded-2xl shadow-2xl max-w-6xl mx-auto">
+      <div className="dark:bg-[#1f1f1f]/70 bg-[#F8FAFC] dark:text-white backdrop-blur-md  rounded-2xl shadow-2xl max-w-6xl mx-auto">
         <div className="px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">

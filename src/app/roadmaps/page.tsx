@@ -39,8 +39,8 @@ interface RoadmapStep {
 const EurekaRoadmapPage: React.FC = () => {
   const [selectedRoadmap, setSelectedRoadmap] = useState<Roadmap | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedLevel, setSelectedLevel] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("Course Category");
+  const [selectedLevel, setSelectedLevel] = useState("Difficulty");
 
   const roadmaps: Roadmap[] = [
     {
@@ -50,7 +50,7 @@ const EurekaRoadmapPage: React.FC = () => {
       duration: "3-4 months",
       description:
         "Complete guide to modern web development from HTML to deployment",
-      icon: <FaCode className="w-6 h-6 text-indigo-400" />,
+      icon: <FaCode className="w-6 h-6 text-black dark:text-indigo-400" />,
       category: "Web Development",
       enrolled: 1247,
       steps: [
@@ -105,7 +105,7 @@ const EurekaRoadmapPage: React.FC = () => {
       duration: "4-6 months",
       description:
         "Master problem-solving with efficient algorithms and data structures",
-      icon: <FaBrain className="w-6 h-6 text-indigo-400" />,
+      icon: <FaBrain className="w-6 h-6 text-black dark:text-indigo-400" />,
       category: "Computer Science",
       enrolled: 892,
       steps: [
@@ -154,7 +154,7 @@ const EurekaRoadmapPage: React.FC = () => {
       duration: "5-7 months",
       description:
         "Complete ML pipeline from data preprocessing to model deployment",
-      icon: <FaDatabase className="w-6 h-6 text-indigo-400" />,
+      icon: <FaDatabase className="w-6 h-6 text-black dark:text-indigo-400" />,
       category: "Machine Learning",
       enrolled: 634,
       steps: [
@@ -202,7 +202,7 @@ const EurekaRoadmapPage: React.FC = () => {
       level: "Intermediate",
       duration: "4-5 months",
       description: "Build cross-platform mobile apps with React Native",
-      icon: <FaPhone className="w-6 h-6 text-indigo-400" />,
+      icon: <FaPhone className="w-6 h-6 text-black dark:text-indigo-400" />,
       category: "Mobile Development",
       enrolled: 453,
       steps: [
@@ -247,22 +247,22 @@ const EurekaRoadmapPage: React.FC = () => {
   ];
 
   const categories = [
-    "All",
+    "Course Category",
     "Web Development",
     "Computer Science",
     "Machine Learning",
     "Mobile Development",
   ];
-  const levels = ["All", "Beginner", "Intermediate", "Advanced"];
+  const levels = ["Difficulty", "Beginner", "Intermediate", "Advanced"];
 
   const filteredRoadmaps = roadmaps.filter((roadmap) => {
     const matchesSearch =
       roadmap.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       roadmap.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory =
-      selectedCategory === "All" || roadmap.category === selectedCategory;
+      selectedCategory === "Course Category" || roadmap.category === selectedCategory;
     const matchesLevel =
-      selectedLevel === "All" || roadmap.level === selectedLevel;
+      selectedLevel === "Difficulty" || roadmap.level === selectedLevel;
 
     return matchesSearch && matchesCategory && matchesLevel;
   });
@@ -293,20 +293,20 @@ const EurekaRoadmapPage: React.FC = () => {
 
   if (selectedRoadmap) {
     return (
-      <div className="min-h-screen bg-gray-900 text-white">
+      <div className="min-h-screen bg-[#F8FAFC] dark:bg-gray-900 text-black dark:text-white">
         <div className="pt-20 pb-12">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
             {/* Header */}
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-4">
-                <div className="p-3 bg-gray-800 border border-gray-700 rounded-lg mr-4">
+                <div className="p-3 bg-hray-300 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg mr-4">
                   {selectedRoadmap.icon}
                 </div>
                 <div>
-                  <h1 className="text-4xl font-bold mb-2 text-white">
+                  <h1 className="text-4xl font-bold mb-2 text-black dark:text-white">
                     {selectedRoadmap.title}
                   </h1>
-                  <p className="text-lg text-gray-400">
+                  <p className="text-lg text-black dark:text-gray-400">
                     {selectedRoadmap.description}
                   </p>
                 </div>
@@ -320,11 +320,11 @@ const EurekaRoadmapPage: React.FC = () => {
                 >
                   {selectedRoadmap.level}
                 </span>
-                <div className="flex items-center space-x-1 text-gray-300">
+                <div className="flex items-center space-x-1 text-black dark:text-gray-300">
                   <FaClock className="w-4 h-4" />
                   <span>{selectedRoadmap.duration}</span>
                 </div>
-                <div className="flex items-center space-x-1 text-gray-300">
+                <div className="flex items-center space-x-1 text-black dark:text-gray-300">
                   <FaUsers className="w-4 h-4" />
                   <span>
                     {selectedRoadmap.enrolled.toLocaleString()} enrolled
@@ -337,33 +337,31 @@ const EurekaRoadmapPage: React.FC = () => {
             <div className="space-y-6">
               {selectedRoadmap.steps.map((step, index) => (
                 <div key={step.id} className="relative">
-                  {index < selectedRoadmap.steps.length - 1 && (
-                    <div className="absolute left-6 top-12 w-0.5 h-16 bg-gray-700 "></div>
-                  )}
-
-                  <div className="flex items-start space-x-4 p-6 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-750 hover:border-gray-600 transition-all duration-200">
+                  <div className="flex items-start space-x-4 p-6 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:bg-gray-750 hover:border-gray-600 transition-all duration-200">
                     <div className="flex-shrink-0 mt-1">
                       {getStatusIcon(step.status)}
                     </div>
 
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-lg font-semibold text-white">
+                        <h3 className="text-lg font-semibold text-black dark:text-white">
                           {step.title}
                         </h3>
-                        <span className="text-sm text-gray-400">
+                        <span className="text-sm text-black dark:text-gray-400">
                           Step {index + 1}
                         </span>
                       </div>
 
-                      <p className="text-gray-300 mb-3">{step.description}</p>
+                      <p className="text-gray-400 dark:text-gray-300 mb-3">
+                        {step.description}
+                      </p>
 
                       {step.resources && (
                         <div className="flex flex-wrap gap-2">
                           {step.resources.map((resource, idx) => (
                             <span
                               key={idx}
-                              className="px-2 py-1 text-xs bg-indigo-900 text-indigo-200 border border-indigo-700 rounded"
+                              className="px-2 py-1 text-xs bg-indigo-400 dark:bg-indigo-900 text-white dark:text-indigo-200 b rounded"
                             >
                               {resource}
                             </span>
@@ -406,7 +404,7 @@ const EurekaRoadmapPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-gray-900 text-white dark:text-white">
       {/* Main Content */}
       <div className="pt-28 pb-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -414,13 +412,13 @@ const EurekaRoadmapPage: React.FC = () => {
           <div className="text-center mb-12">
             <div className="max-w-2xl mx-auto space-y-4">
               <div className="relative">
-                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-400 w-5 h-5" />
                 <input
                   type="text"
                   placeholder="Search roadmaps..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-lg border bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+                  className="w-full pl-10 pr-4 py-3 rounded-lg border bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-black dark:text-white placeholder-gray-400"
                 />
               </div>
 
@@ -429,38 +427,37 @@ const EurekaRoadmapPage: React.FC = () => {
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border appearance-none bg-gray-800 border-gray-700 text-white focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+                    className="w-full px-4 py-3 rounded-lg border appearance-none bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-black dark:text-white "
                   >
                     {categories.map((category) => (
                       <option
                         key={category}
                         value={category}
-                        className="bg-gray-800 text-white"
+                        className="bg-white dark:bg-gray-800 text-black dark:text-white"
                       >
                         {category}
                       </option>
                     ))}
                   </select>
-                  <FaChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" />
+                  <FaChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black dark:text-gray-400 w-5 h-5 pointer-events-none" />
                 </div>
-
                 <div className="relative flex-1">
                   <select
                     value={selectedLevel}
                     onChange={(e) => setSelectedLevel(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border appearance-none bg-gray-800 border-gray-700 text-white focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+                    className="w-full px-4 py-3 rounded-lg border appearance-none bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-black dark:text-white"
                   >
                     {levels.map((level) => (
                       <option
                         key={level}
                         value={level}
-                        className="bg-gray-800 text-white"
+                        className="bg-white dark:bg-gray-800 text-black dark:text-white"
                       >
                         {level}
                       </option>
                     ))}
                   </select>
-                  <FaChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" />
+                  <FaChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black dark:text-gray-400 w-5 h-5 pointer-events-none" />
                 </div>
               </div>
             </div>
@@ -471,15 +468,15 @@ const EurekaRoadmapPage: React.FC = () => {
             {filteredRoadmaps.map((roadmap) => (
               <div
                 key={roadmap.id}
-                className="group cursor-pointer transition-all duration-300 bg-gray-800 hover:bg-gray-750 border border-gray-700 hover:border-indigo-600 rounded-lg p-6 hover:scale-105"
+                className="group cursor-pointer transition-all duration-300 bg-white dark:bg-gray-800 hover:bg-gray-750 border border-gray-300  dark:border-gray-700 hover:border-indigo-600 rounded-lg p-6 hover:scale-105"
                 onClick={() => setSelectedRoadmap(roadmap)}
               >
                 <div className="flex items-center mb-4 ">
-                  <div className="p-3 bg-gray-700 border border-gray-600 rounded-lg mr-4 group-hover:bg-gray-600 transition-colors duration-200">
+                  <div className="p-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg mr-4  transition-colors duration-200">
                     {roadmap.icon}
                   </div>
                   <div className="flex-1 ">
-                    <h3 className="text-lg font-semibold mb-1 text-white">
+                    <h3 className="text-lg font-semibold mb-1 text-black dark:text-white">
                       {roadmap.title}
                     </h3>
                     <span
@@ -492,11 +489,11 @@ const EurekaRoadmapPage: React.FC = () => {
                   </div>
                 </div>
 
-                <p className="text-gray-400 text-sm mb-4 line-clamp-2">
+                <p className="text-black dark:text-gray-400 text-sm mb-4 line-clamp-2">
                   {roadmap.description}
                 </p>
 
-                <div className="flex items-center justify-between text-sm text-gray-300 mb-4">
+                <div className="flex items-center justify-between text-sm text-black dark:text-gray-300 mb-4">
                   <div className="flex items-center space-x-1">
                     <FaClock className="w-4 h-4" />
                     <span>{roadmap.duration}</span>
