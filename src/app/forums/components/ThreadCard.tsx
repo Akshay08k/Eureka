@@ -52,7 +52,10 @@ const ThreadCard: React.FC<{
         <div className="flex items-center space-x-3">
           <div className="flex items-center space-x-2">
             <img
-              src={thread.author.avatar}
+              src={
+                thread.author.avatar ||
+                "https://avatars.githubusercontent.com/u/96125015?v=4"
+              }
               alt={thread.author.name}
               className="w-6 h-6 rounded-full ring-2 ring-purple-500/20"
             />

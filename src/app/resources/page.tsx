@@ -135,7 +135,7 @@ const ResourcesPage: React.FC = () => {
     });
 
   return (
-    <div className="min-h-screen bg-gray-900 pt-20">
+    <div className="min-h-screen bg-white dark:bg-gray-900 pt-20">
       <FileUpload isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
       {/* Main Content */}
       <div className="pt-16">
@@ -143,7 +143,7 @@ const ResourcesPage: React.FC = () => {
           {/* Page Header */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-white mb-2">
+              <h1 className="text-3xl font-bold text-black dark:text-white mb-2">
                 Resources Center
               </h1>
               <p className="text-gray-400">
@@ -163,7 +163,7 @@ const ResourcesPage: React.FC = () => {
           <div className="mb-6">
             {/* Mobile Filter Toggle */}
             <button
-              className="md:hidden mb-4 flex items-center space-x-2 text-gray-300 border border-gray-600 px-4 py-2 rounded-lg hover:border-indigo-500 transition-colors"
+              className="md:hidden mb-4 flex items-center space-x-2 text-gray-900 dark:text-gray-300 border border-gray-200 dark:border-gray-600 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors"
               onClick={() => setShowFilters(!showFilters)}
             >
               <FiFilter className="text-sm" />
@@ -181,7 +181,7 @@ const ResourcesPage: React.FC = () => {
                 <select
                   value={selectedSubject}
                   onChange={(e) => setSelectedSubject(e.target.value)}
-                  className="outline outline-gray-600  rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-500 bg-gray-800 text-gray-200"
+                  className=" rounded-sm hover:outline hover:outline-gray-500 px-3 py-2 text-sm focus:outline-none focus:border-indigo-500 bg-gray-300 dark:bg-gray-800 text-gray-900dark:text-gray-200"
                 >
                   {subjects.map((subject) => (
                     <option key={subject} value={subject}>
@@ -193,7 +193,7 @@ const ResourcesPage: React.FC = () => {
                 <select
                   value={selectedFileType}
                   onChange={(e) => setSelectedFileType(e.target.value)}
-                  className="outline outline-gray-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-500 bg-gray-800 text-gray-200"
+                  className=" rounded-sm px-3 py-2 text-sm hover:outline hover:outline-gray-500  focus:border-indigo-500 bg-gray-300 dark:bg-gray-800 text-gray-900dark:text-gray-200"
                 >
                   {fileTypes.map((type) => (
                     <option key={type} value={type}>
@@ -205,7 +205,7 @@ const ResourcesPage: React.FC = () => {
                 <select
                   value={sortOrder}
                   onChange={(e) => setSortOrder(e.target.value)}
-                  className="border border-gray-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-500 bg-gray-800 text-gray-200"
+                  className="hover:outline hover:outline-gray-500 rounded-sm px-3 py-2 text-sm  bg-gray-300 dark:bg-gray-800 text-gray-900dark:text-gray-200"
                 >
                   <option value="newest">Newest First</option>
                   <option value="alphabetical">A-Z</option>
@@ -215,23 +215,23 @@ const ResourcesPage: React.FC = () => {
           </div>
 
           {/* Resources Grid */}
-          <div className="grid gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {filteredResources.map((resource) => (
               <div
                 key={resource.id}
-                className="bg-gray-800 border border-gray-700 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg hover:shadow-indigo-500/10 hover:border-indigo-500/50 transition-all duration-200 cursor-pointer group"
+                className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg dark:hover:border-indigo-500/50 transition-all duration-200 cursor-pointer group"
               >
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0">
-                  <div className="flex items-start space-x-4 flex-1">
+                <div className="flex flex-col space-y-3">
+                  <div className="flex items-start space-x-3">
                     <div className="flex-shrink-0 mt-1">
                       {getFileIcon(resource.type)}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-lg font-semibold text-white group-hover:text-indigo-400 transition-colors mb-1">
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors mb-2 line-clamp-2">
                         {resource.title}
                       </h3>
-                      <div className="flex flex-wrap items-center gap-3 text-sm text-gray-400">
-                        <span className="bg-indigo-900/50 text-indigo-300 px-2 py-1 rounded-md font-medium border border-indigo-700/50">
+                      <div className="flex flex-col space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                        <span className="bg-gray-100 dark:bg-indigo-900/30 text-gray-700 dark:text-indigo-300 px-2 py-1 rounded-md font-medium text-xs inline-block w-fit">
                           {resource.subject}
                         </span>
                         <span>by {resource.uploaderName}</span>
@@ -241,13 +241,13 @@ const ResourcesPage: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-2 md:ml-4">
-                    <button className="flex items-center space-x-1 bg-gray-700 hover:bg-gray-600 text-gray-200 px-3 py-2 rounded-lg text-sm font-medium transition-colors">
-                      <FiEye className="text-xs" />
+                  <div className="flex items-center space-x-2 pt-2">
+                    <button className="flex items-center space-x-1 bg-gray-700 dark:bg-gray-600 hover:bg-gray-600 dark:hover:bg-gray-500 text-gray-200 px-3 py-2 rounded-lg text-sm font-medium transition-colors flex-1 justify-center">
+                      <FiEye className="text-sm" />
                       <span>View</span>
                     </button>
-                    <button className="flex items-center space-x-1 bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm hover:shadow-lg hover:shadow-indigo-500/25">
-                      <FiDownload className="text-xs" />
+                    <button className="flex items-center space-x-1 bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm hover:shadow-lg hover:shadow-indigo-500/25 flex-1 justify-center">
+                      <FiDownload className="text-sm" />
                       <span>Download</span>
                     </button>
                   </div>

@@ -14,9 +14,6 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { data: session, status } = useSession();
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  if (status === "loading") return <div>Loading...</div>;
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -31,7 +28,7 @@ export default function Navbar() {
         <div className="px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
-              <div className="relative text-center text-2xl font-bold bg-gradient-to-r from-indigo-200 to-indigo-400 bg-clip-text text-transparent">
+              <div className="relative text-center text-2xl font-bold bg-gradient-to-r dark:from-indigo-200 dark:to-indigo-400 from-indigo-600 to-indigo-800 bg-clip-text text-transparent">
                 <Link href="/">Eureka</Link>
               </div>
             </div>

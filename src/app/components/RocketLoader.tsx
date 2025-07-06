@@ -4,23 +4,18 @@ export default function Loader() {
   return (
     <div className="flex items-center justify-center h-screen bg-white dark:bg-black">
       <div className="relative">
-        {/* Main Loading Ring */}
         <div className="w-24 h-24 relative">
-          {/* Outer rotating ring */}
           <div className="absolute inset-0 rounded-full border-4 border-gray-200"></div>
           <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-indigo-500 animate-spin"></div>
 
-          {/* Inner pulsing circle */}
-          <div className="absolute inset-2 rounded-full bg-indigo-100 animate-pulse"></div>
-          <div className="absolute inset-4 rounded-full bg-indigo-200 animate-ping"></div>
+          <div className="absolute inset-2 rounded-full bg-indigo-800 animate-pulse"></div>
+          <div className="absolute inset-4 rounded-full bg-indigo-800 animate-ping"></div>
 
-          {/* Center dot */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="w-3 h-3 bg-indigo-600 rounded-full animate-bounce"></div>
           </div>
         </div>
 
-        {/* Floating particles */}
         <div className="absolute -top-8 -left-8">
           <div className="w-2 h-2 bg-indigo-400 rounded-full animate-ping opacity-60"></div>
         </div>
@@ -34,10 +29,8 @@ export default function Loader() {
           <div className="w-2 h-2 bg-purple-300 rounded-full animate-pulse delay-300 opacity-60"></div>
         </div>
 
-        {/* Secondary ring */}
         <div className="absolute -inset-6 rounded-full border border-indigo-200 animate-spin-slow opacity-30"></div>
 
-        {/* Loading text */}
         <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 text-center">
           <div className="text-indigo-600 font-bold text-lg animate-pulse">
             Loading
@@ -50,7 +43,6 @@ export default function Loader() {
         </div>
       </div>
 
-      {/* Custom animations */}
       <style jsx>{`
         @keyframes spin-slow {
           from {

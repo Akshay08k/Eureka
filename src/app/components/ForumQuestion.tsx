@@ -107,11 +107,11 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 bg-opacity-50 backdrop-blur flex items-center justify-center z-50 p-5 overflow-y-auto">
-      <div className="bg-gray-800 rounded-2xl shadow-2xl border border-gray-600 max-w-2xl w-full p-8 relative animate-in fade-in slide-in-from-bottom-4 duration-300 my-8">
+      <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-600 max-w-2xl w-full p-8 relative animate-in fade-in slide-in-from-bottom-4 duration-300 my-8">
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-200 hover:bg-gray-700 p-2 rounded-lg transition-all duration-200"
+          className="absolute top-4 right-4 text-black dark:text-gray-400 hover:text-gray-200 hover:bg-gray-700 p-2 rounded-lg transition-all duration-200"
         >
           <IoClose size={24} />
         </button>
@@ -120,10 +120,10 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
           <>
             {/* Header */}
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-[#5B5F97] mb-2">
+              <h2 className="text-3xl font-bold text-black dark:text-[#5B5F97] mb-2">
                 Ask a Question
               </h2>
-              <p className="text-gray-400">
+              <p className=" text-gray-600 dark:text-gray-400">
                 Share your question with the Eureka community
               </p>
             </div>
@@ -132,28 +132,31 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
             <div className="space-y-6">
               {/* Title Input */}
               <div>
-                <label className="block text-sm font-semibold text-gray-300 mb-2">
-                  Question Title *
+                <label className="block text-sm font-semibold text-black dark:text-gray-300 mb-2">
+                  Question Title <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   value={postData.title}
                   onChange={(e) => handleInputChange("title", e.target.value)}
                   placeholder="What's your question about?"
-                  className="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-lg text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#6C63FF] focus:border-transparent transition-all duration-200"
+                  className="w-full px-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-xl text-black dark:text-gray-200 placeholder-gray-500 transition-all duration-200"
                   maxLength={150}
                 />
                 <div className="text-right mt-1">
-                  <span className="text-xs text-gray-500">
+                  <span
+                    className={`text-xs text-gray-500 ${
+                      postData.title.length > 140 ? "text-red-500" : ""
+                    }`}
+                  >
                     {postData.title.length}/150
                   </span>
                 </div>
               </div>
-
               {/* Description Textarea */}
               <div>
-                <label className="block text-sm font-semibold text-gray-300 mb-2">
-                  Description *
+                <label className="block text-sm font-semibold text-black dark:text-gray-300 mb-2">
+                  Description <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   value={postData.description}
@@ -162,7 +165,7 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
                   }
                   placeholder="Provide more details about your question..."
                   rows={6}
-                  className="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-lg text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#6C63FF] focus:border-transparent transition-all duration-200 resize-none"
+                  className="w-full px-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-lg text-black dark:text-gray-200 placeholder-gray-500 transition-all duration-200 resize-none"
                   maxLength={1000}
                 />
                 <div className="text-right mt-1">
@@ -171,30 +174,28 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
                   </span>
                 </div>
               </div>
-
               {/* Tags Section */}
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <label className="text-sm font-semibold text-gray-300">
-                    Tags (Optional)
+                  <label className="text-sm font-semibold text-black dark:text-gray-300">
+                    Tags
                   </label>
-                  <span className="text-xs text-gray-500 bg-gray-700 px-2 py-1 rounded">
+                  <span className="text-xs text-black dark:text-gray-500 bg-gray-400 dark:bg-gray-700 px-2 py-1 rounded">
                     Max 5 tags
                   </span>
                 </div>
 
-                {/* Existing Tags */}
                 {postData.tags.length > 0 && (
                   <div className="flex flex-wrap gap-2 mb-3">
                     {postData.tags.map((tag, index) => (
                       <span
                         key={index}
-                        className="inline-flex items-center gap-1 bg-[#6C63FF] text-white px-3 py-1 rounded-full text-sm font-medium"
+                        className="inline-flex items-center gap-1 bg-[#6C63FF] text-white px-3 py-1 rounded-sm text-sm font-medium"
                       >
                         {tag}
                         <button
                           onClick={() => removeTag(tag)}
-                          className="hover:bg-white hover:bg-opacity-20 rounded-full p-0.5 transition-all duration-200"
+                          className="hover:bg-black dark:hover:bg-white hover:bg-opacity-20 rounded-full p-0.5 transition-all duration-200"
                         >
                           <IoCloseOutline size={14} />
                         </button>
@@ -213,7 +214,7 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
                       onChange={(e) => setCurrentTag(e.target.value)}
                       onKeyPress={handleTagKeyPress}
                       placeholder="Add a tag..."
-                      className="flex-1 px-3 py-2 bg-gray-900 border border-gray-600 rounded-lg text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#6C63FF] focus:border-transparent transition-all duration-200"
+                      className="flex-1 px-3 py-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-lg text-black dark:text-gray-200 placeholder-gray-500 transition-all duration-200"
                       maxLength={20}
                     />
                     <button
@@ -230,9 +231,8 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
                   </div>
                 )}
               </div>
-
               {/* AI Tagging Option */}
-              <div className="bg-gray-900 border border-gray-600 rounded-lg p-4">
+              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-lg p-4">
                 <div className="flex items-center gap-3">
                   <div className="flex items-center">
                     <input
@@ -242,15 +242,18 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
                       onChange={(e) =>
                         handleInputChange("aiTagging", e.target.checked)
                       }
-                      className="w-4 h-4 text-[#6C63FF] bg-gray-700 border-gray-600 rounded focus:ring-[#6C63FF] focus:ring-2"
+                      className="w-4 h-4 text-black dark:text-[#6C63FF] bg-gray-700 border-gray-600 rounded"
                     />
                   </div>
 
                   <div className="flex items-center gap-2 flex-1">
-                    <IoSparklesOutline size={20} className="text-[#6C63FF]" />
+                    <IoSparklesOutline
+                      size={20}
+                      className="dark:text-[#6C63FF]"
+                    />
                     <label
                       htmlFor="aiTagging"
-                      className="text-sm font-medium text-gray-200 cursor-pointer"
+                      className="text-sm font-medium text-black dark:text-gray-200 cursor-pointer"
                     >
                       AI Tag Generation
                     </label>
@@ -259,7 +262,7 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
                       <button
                         onMouseEnter={() => setShowTooltip(true)}
                         onMouseLeave={() => setShowTooltip(false)}
-                        className="text-gray-400 hover:text-gray-300 transition-colors duration-200"
+                        className="text-black dark:text-gray-400 hover:text-gray-300 transition-colors duration-200"
                       >
                         <IoHelpCircleOutline size={16} />
                       </button>
@@ -276,7 +279,7 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
                 </div>
 
                 {postData.aiTagging && (
-                  <p className="text-xs text-gray-400 mt-2 ml-7">
+                  <p className="text-xs text-blackdark:text-gray-400 mt-2 ml-7">
                     Tags will be automatically generated based on your question
                     content
                   </p>
@@ -314,10 +317,10 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
             <div className="w-20 h-20 mx-auto mb-6 bg-[#10B981] rounded-full flex items-center justify-center">
               <IoCheckmarkCircle size={40} className="text-white" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-200 mb-3">
+            <h3 className="text-2xl font-bold text-black dark:text-gray-200 mb-3">
               Question Posted!
             </h3>
-            <p className="text-gray-400 mb-8 max-w-md mx-auto">
+            <p className=" text-black dark:text-gray-400 mb-8 max-w-md mx-auto">
               Your question has been posted to the forum. The community will
               help you find answers.
             </p>

@@ -158,32 +158,30 @@ const FileUpload: React.FC<FileUploadPopupProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-5">
-      <div className="bg-gray-800 rounded-2xl shadow-2xl border border-gray-600 max-w-2xl w-full p-8  relative animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-600 max-w-2xl w-full p-8  relative animate-in fade-in slide-in-from-bottom-4 duration-700">
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-200 hover:bg-gray-700 p-2 rounded-lg transition-all duration-200"
+          className="absolute top-4 right-4 text-black dark:text-gray-400 hover:text-gray-200 hover:bg-gray-700 p-2 rounded-lg transition-all duration-200"
         >
           <IoClose size={24} />
         </button>
 
         {!uploadComplete ? (
           <>
-        
             <div className="text-center mb-6">
-              <h2 className="text-3xl font-bold text-[#5B5F97] mb-2">
+              <h2 className="text-3xl font-bold text-black dark:text-[#5B5F97] mb-2">
                 Upload Resource
               </h2>
-              <p className="text-gray-400">
+              <p className="text-black dark:text-gray-400">
                 Share your learning materials with the community
               </p>
             </div>
 
-       
             <div
-              className={`border-2 border-dashed rounded-xl p-12 text-center transition-all duration-300 cursor-pointer mb-6 relative overflow-hidden bg-gray-900 ${
+              className={`border-2 border-dashed rounded-xl p-12 text-center transition-all duration-300 cursor-pointer mb-6 relative overflow-hidden bg-white dark:bg-gray-900  ${
                 isDragOver
-                  ? "border-[#6C63FF] bg-indigo-950"
-                  : "border-gray-600 hover:border-[#6C63FF] hover:bg-indigo-950 hover:-translate-y-0.5"
+                  ? "border-[#9c98e1] dark:border-[#6C63FF] bg-indigo-400 dark:bg-indigo-950"
+                  : "border-gray-500 dark:border-gray-600 hover:border-[#6C63FF] hover:bg-gray-400 dark:hover:bg-indigo-950 hover:-translate-y-0.5"
               }`}
               onDragEnter={handleDragEnter}
               onDragLeave={handleDragLeave}
@@ -199,10 +197,10 @@ const FileUpload: React.FC<FileUploadPopupProps> = ({ isOpen, onClose }) => {
                 <IoCloudUploadOutline size={32} className="text-white" />
               </div>
 
-              <p className="text-lg font-semibold text-gray-200 mb-2">
+              <p className="text-lg font-semibold text-black  dark:text-gray-200 mb-2">
                 Drop your file here or click to browse
               </p>
-              <p className="text-gray-400 text-sm mb-4">
+              <p className="text-blackdark:text-gray-400 text-sm mb-4">
                 Maximum file size: 50MB
               </p>
 
@@ -210,14 +208,13 @@ const FileUpload: React.FC<FileUploadPopupProps> = ({ isOpen, onClose }) => {
                 {["PDF", "DOC", "PPT", "IMG"].map((type) => (
                   <span
                     key={type}
-                    className="bg-gray-700 text-[#6C63FF] px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider border border-gray-600"
+                    className="bg-white dark:bg-gray-700 text-black dark:text-[#6C63FF] px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider outline outline-black"
                   >
                     {type}
                   </span>
                 ))}
               </div>
             </div>
-
 
             <input
               ref={fileInputRef}
@@ -227,15 +224,14 @@ const FileUpload: React.FC<FileUploadPopupProps> = ({ isOpen, onClose }) => {
               onChange={handleFileSelect}
             />
 
-  
             {selectedFile && (
-              <div className="bg-gray-900 border border-gray-600 rounded-lg p-4 mb-6 flex items-center gap-3">
+              <div className="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg p-4 mb-6 flex items-center gap-3">
                 <IoDocumentTextOutline size={24} className="text-[#6C63FF]" />
                 <div className="flex-1">
-                  <div className="font-semibold text-gray-200">
+                  <div className="font-semibold text-black dark:text-gray-200">
                     {selectedFile.name}
                   </div>
-                  <div className="text-gray-400 text-sm">
+                  <div className="text-blackdark:text-gray-400 text-sm">
                     {selectedFile.size}
                   </div>
                 </div>
@@ -248,12 +244,11 @@ const FileUpload: React.FC<FileUploadPopupProps> = ({ isOpen, onClose }) => {
               </div>
             )}
 
-
             {isUploading && (
               <div className="mb-6">
                 <div className="w-full bg-gray-700 rounded-full h-1 overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-[#6C63FF] to-[#1a946c] rounded-full transition-all duration-300"
+                    className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 dark:from-[#6C63FF] dark:to-[#1a946c] rounded-full transition-all duration-400"
                     style={{ width: `${uploadProgress}%` }}
                   />
                 </div>
@@ -283,10 +278,10 @@ const FileUpload: React.FC<FileUploadPopupProps> = ({ isOpen, onClose }) => {
             <div className="w-16 h-16 mx-auto mb-4 bg-[#10B981] rounded-full flex items-center justify-center">
               <IoCheckmarkCircle size={32} className="text-white" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-200 mb-2">
+            <h3 className="text-xl font-semibold text-black dark:text-gray-200 mb-2">
               Upload Successful!
             </h3>
-            <p className="text-gray-400 mb-6">
+            <p className="text-black dark:text-gray-400 mb-6">
               Your resource has been shared with the community
             </p>
             <button
