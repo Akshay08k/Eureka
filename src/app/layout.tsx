@@ -6,6 +6,7 @@ import Navbar from "./Navbar/page";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/Auth"; // adjust path if needed
 import SessionGuard from "./lib/SessionWrapper";
+import { Analytics } from "@vercel/analytics/next";
 const geist = Geist({
   subsets: ["latin"],
   variable: "--font-geist",
@@ -31,6 +32,7 @@ export default async function RootLayout({
           <SessionGuard>
             {session && <Navbar />}
             {children}
+            <Analytics />
           </SessionGuard>
         </Providers>
       </body>
