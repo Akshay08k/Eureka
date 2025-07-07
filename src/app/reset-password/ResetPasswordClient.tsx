@@ -67,27 +67,29 @@ export default function ResetPasswordClient() {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-4 relative overflow-hidden">
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-black flex items-center justify-center px-4 relative overflow-hidden">
       <div className="relative z-10 w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold bg-gradient-to-r to-indigo-400 bg-clip-text text-transparent mb-2">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-500 to-indigo-400 bg-clip-text text-transparent mb-2">
             Eureka
           </h1>
         </div>
 
-        <div className="backdrop-blur-xl bg-black border border-gray-800 rounded-2xl p-8 shadow-2xl">
-          <h2 className="text-2xl font-semibold text-white text-center mb-6">
+        <div className="backdrop-blur-xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl p-8 shadow-2xl">
+          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white text-center mb-6">
             Reset Password
           </h2>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-500/20 border border-red-500/30 rounded-lg">
-              <p className="text-red-300 text-sm">{error}</p>
+            <div className="mb-4 p-3 bg-red-100 dark:bg-red-500/20 border border-red-300 dark:border-red-500/30 rounded-lg">
+              <p className="text-red-600 dark:text-red-300 text-sm">{error}</p>
             </div>
           )}
           {message && (
-            <div className="mb-4 p-3 bg-green-500/20 border border-green-500/30 rounded-lg">
-              <p className="text-green-300 text-sm">{message}</p>
+            <div className="mb-4 p-3 bg-green-100 dark:bg-green-500/20 border border-green-300 dark:border-green-500/30 rounded-lg">
+              <p className="text-green-600 dark:text-green-300 text-sm">
+                {message}
+              </p>
             </div>
           )}
 
@@ -98,7 +100,7 @@ export default function ResetPasswordClient() {
                 placeholder="New password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 backdrop-blur-sm"
+                className="w-full px-4 py-3 bg-white dark:bg-white/5 border border-gray-300 dark:border-white/20 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none transition-all duration-200"
                 required
               />
             </div>
@@ -108,7 +110,7 @@ export default function ResetPasswordClient() {
                 placeholder="Confirm new password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 backdrop-blur-sm"
+                className="w-full px-4 py-3 bg-white dark:bg-white/5 border border-gray-300 dark:border-white/20 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none  transition-all duration-200"
                 required
               />
             </div>
@@ -116,10 +118,10 @@ export default function ResetPasswordClient() {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-3 rounded-lg font-semibold transform transition-all duration-200 ${
+              className={`w-full py-3 rounded-lg font-semibold transition-all duration-200 ${
                 loading
                   ? "bg-gray-600 cursor-not-allowed text-white"
-                  : "bg-gradient-to-r to-indigo-600 text-white hover:scale-[1.02] hover:border border-white hover:bg-transparent hover:text-white"
+                  : "bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:scale-[1.02] transform hover:border border-white "
               }`}
             >
               {loading ? "Updating..." : "Update Password"}

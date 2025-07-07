@@ -260,7 +260,8 @@ const EurekaRoadmapPage: React.FC = () => {
       roadmap.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       roadmap.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory =
-      selectedCategory === "Course Category" || roadmap.category === selectedCategory;
+      selectedCategory === "Course Category" ||
+      roadmap.category === selectedCategory;
     const matchesLevel =
       selectedLevel === "Difficulty" || roadmap.level === selectedLevel;
 
