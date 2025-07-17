@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { useRef } from "react";
 import {
   FiUser,
   FiBookOpen,
@@ -14,6 +15,7 @@ import {
   FiMoon,
   FiSun,
   FiUsers,
+  FiInfo,
 } from "react-icons/fi";
 import { FaGraduationCap } from "react-icons/fa";
 interface UserData {
@@ -21,6 +23,7 @@ interface UserData {
   email: string;
   role: "student" | "faculty" | "admin";
   image?: string;
+
   gettingStarted: {
     completed: boolean;
     currentStep: number;
@@ -46,6 +49,7 @@ interface UserProfile {
   };
   bio: string;
   profilePictureUrl: string;
+  dob: Date;
 }
 
 interface OnboardingStep {
@@ -57,6 +61,7 @@ interface OnboardingStep {
 
 const EurekaOnboarding: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [userData, setUserData] = useState<UserData>({
     name: "",
     email: "",
@@ -86,6 +91,7 @@ const EurekaOnboarding: React.FC = () => {
     },
     bio: "",
     profilePictureUrl: "",
+    dob: new Date(),
   });
 
   const [newInterest, setNewInterest] = useState("");
@@ -186,7 +192,19 @@ const EurekaOnboarding: React.FC = () => {
     console.log("Saving progress...", { userData, userProfile });
     //will send the data to backend
   };
-
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUserProfile((prev) => ({
+          ...prev,
+          profilePictureUrl: reader.result as string,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   const nextStep = () => {
     if (currentStep < steps.length) {
       setCurrentStep((prev) => prev + 1);
@@ -222,6 +240,8 @@ const EurekaOnboarding: React.FC = () => {
         completed: true,
       },
     }));
+    //will send the data to backend API CALL
+    window.location.href = "/";
     console.log("Onboarding completed!", { userData, userProfile });
     //call back to main app where you started getting starteed
   };
@@ -269,8 +289,8 @@ const EurekaOnboarding: React.FC = () => {
         return (
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Full Name *
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Full Name<span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -278,14 +298,14 @@ const EurekaOnboarding: React.FC = () => {
                 onChange={(e) =>
                   setUserData((prev) => ({ ...prev, name: e.target.value }))
                 }
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full p-3 border border-gray-300 rounded-lg outline-none"
                 placeholder="Enter your full name"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address *
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Email Address<span className="text-red-500">*</span>
               </label>
               <input
                 type="email"
@@ -293,24 +313,24 @@ const EurekaOnboarding: React.FC = () => {
                 onChange={(e) =>
                   setUserData((prev) => ({ ...prev, email: e.target.value }))
                 }
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full p-3 border border-gray-300 rounded-lg outline-none"
                 placeholder="Enter your email address"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                I am a *
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Choose your role<span className="text-red-500">*</span>
               </label>
               <div className="grid grid-cols-2 gap-3">
                 <button
                   onClick={() =>
                     setUserData((prev) => ({ ...prev, role: "student" }))
                   }
-                  className={`p-4 rounded-lg border-2 transition-all ${
+                  className={`p-4 rounded-lg border border-gray-600 transition-all ${
                     userData.role === "student"
-                      ? "border-indigo-500 bg-indigo-50 text-indigo-700"
-                      : "border-gray-300 hover:border-gray-400"
+                      ? "border-indigo-500 bg-indigo-50 text-indigo-700 dark:bg-indigo-600 dark:text-black"
+                      : ""
                   }`}
                 >
                   <FaGraduationCap className="mx-auto mb-2" size={24} />
@@ -320,10 +340,10 @@ const EurekaOnboarding: React.FC = () => {
                   onClick={() =>
                     setUserData((prev) => ({ ...prev, role: "faculty" }))
                   }
-                  className={`p-4 rounded-lg border-2 transition-all ${
+                  className={`p-4 rounded-lg border border-gray-600 transition-all ${
                     userData.role === "faculty"
-                      ? "border-indigo-500 bg-indigo-50 text-indigo-700"
-                      : "border-gray-300 hover:border-gray-400"
+                      ? "border-indigo-500 bg-indigo-50 text-indigo-700 dark:bg-indigo-600 dark:text-black"
+                      : ""
                   }`}
                 >
                   <FiUsers className="mx-auto mb-2" size={24} />
@@ -419,8 +439,8 @@ const EurekaOnboarding: React.FC = () => {
             ) : (
               <>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Department *
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Department <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -434,14 +454,14 @@ const EurekaOnboarding: React.FC = () => {
                         },
                       }))
                     }
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full p-3 border border-gray-300 rounded-lg outline-none"
                     placeholder="e.g., Computer Science Department"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Institution *
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Institution <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -455,13 +475,13 @@ const EurekaOnboarding: React.FC = () => {
                         },
                       }))
                     }
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full p-3 border border-gray-300 rounded-lg outline-none"
                     placeholder="e.g., University of Technology"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Subjects You Teach
                   </label>
                   <div className="flex gap-2 mb-2">
@@ -470,7 +490,7 @@ const EurekaOnboarding: React.FC = () => {
                       value={newSubject}
                       onChange={(e) => setNewSubject(e.target.value)}
                       onKeyPress={(e) => e.key === "Enter" && addSubject()}
-                      className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                      className="flex-1 p-3 border border-gray-300 rounded-lg outline-none"
                       placeholder="Add a subject"
                     />
                     <button
@@ -509,7 +529,7 @@ const EurekaOnboarding: React.FC = () => {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Add Your Interests *
               </label>
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm text-gray-600 dark:text-gray-300  mb-4">
                 Add topics you're passionate about to help us connect you with
                 relevant content and people.
               </p>
@@ -557,7 +577,7 @@ const EurekaOnboarding: React.FC = () => {
                 Profile Visibility
               </label>
               <div className="space-y-2">
-                <label className="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                <label className="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer ">
                   <input
                     type="radio"
                     name="visibility"
@@ -579,12 +599,12 @@ const EurekaOnboarding: React.FC = () => {
                       <FiEye className="text-indigo-600" />
                       <span className="font-medium">Public</span>
                     </div>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       Anyone can view your profile and connect with you
                     </p>
                   </div>
                 </label>
-                <label className="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                <label className="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer">
                   <input
                     type="radio"
                     name="visibility"
@@ -606,7 +626,7 @@ const EurekaOnboarding: React.FC = () => {
                       <FiEyeOff className="text-indigo-600" />
                       <span className="font-medium">Private</span>
                     </div>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       Only you can view your profile details
                     </p>
                   </div>
@@ -619,7 +639,7 @@ const EurekaOnboarding: React.FC = () => {
                 <FiBell className="text-indigo-600" />
                 <div>
                   <span className="font-medium">Email Notifications</span>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
                     Get notified about new connections and messages
                   </p>
                 </div>
@@ -659,7 +679,7 @@ const EurekaOnboarding: React.FC = () => {
                 )}
                 <div>
                   <span className="font-medium">Dark Mode</span>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
                     Toggle between light and dark themes
                   </p>
                 </div>
@@ -700,32 +720,42 @@ const EurekaOnboarding: React.FC = () => {
                 Profile Picture
               </label>
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
+                <div
+                  className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden cursor-pointer"
+                  onClick={() => fileInputRef.current?.click()}
+                >
                   {userProfile.profilePictureUrl ? (
                     <img
                       src={userProfile.profilePictureUrl}
                       alt="Profile"
-                      className="w-full h-full rounded-full object-cover"
+                      className="w-full h-full object-cover"
                     />
                   ) : (
                     <FiUser className="text-gray-400" size={24} />
                   )}
                 </div>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleImageChange}
+                />
                 <div className="flex-1">
                   <input
-                    type="url"
-                    value={userProfile.profilePictureUrl}
+                    type="date"
+                    value={userProfile.dob.toISOString().split("T")[0]}
                     onChange={(e) =>
                       setUserProfile((prev) => ({
                         ...prev,
-                        profilePictureUrl: e.target.value,
+                        name: e.target.value,
                       }))
                     }
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    placeholder="Enter image URL"
+                    className="w-full p-3 border border-gray-300 rounded-lg outline-none mt-2"
+                    placeholder="Enter your name"
                   />
                   <p className="text-sm text-gray-500 mt-1">
-                    Add a profile picture URL (optional)
+                    Enter your date of birth
                   </p>
                 </div>
               </div>
@@ -741,7 +771,8 @@ const EurekaOnboarding: React.FC = () => {
                   setUserProfile((prev) => ({ ...prev, bio: e.target.value }))
                 }
                 rows={4}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                maxLength={500}
+                className="w-full p-3 border border-gray-300 rounded-lg outline-none"
                 placeholder="Tell us about yourself, your research interests, or what you're passionate about..."
               />
               <p className="text-sm text-gray-500 mt-1">
@@ -754,29 +785,16 @@ const EurekaOnboarding: React.FC = () => {
       case 6:
         return (
           <div className="text-center space-y-6">
-            <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-              <FiCheckCircle className="text-green-600" size={48} />
-            </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                Welcome to Eureka, {userData.name}!
-              </h3>
-              <p className="text-gray-600 mb-6">
-                Your profile has been set up successfully. You're now ready to
-                explore the platform, connect with peers, and start
-                collaborating on exciting academic projects.
-              </p>
               <div className="bg-indigo-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-indigo-900 mb-2">
-                  Next Steps:
+                <h4 className="text-xl font-semibold text-black mb-2">
+                  Next Steps
                 </h4>
-                <ul className="text-sm text-indigo-700 space-y-1">
-                  <li>
-                    • Explore the community and find like-minded academics
-                  </li>
-                  <li>• Join discussion groups related to your interests</li>
-                  <li>• Start or participate in collaborative projects</li>
-                  <li>• Share your knowledge and learn from others</li>
+                <ul className="text-sm text-black space-y-1">
+                  <li>Explore the community and find like-minded academics</li>
+                  <li> Join discussion groups related to your interests</li>
+                  <li> Start or participate in collaborative projects</li>
+                  <li> Share your knowledge and learn from others</li>
                 </ul>
               </div>
             </div>
@@ -888,7 +906,6 @@ const EurekaOnboarding: React.FC = () => {
           </div>
         </div>
 
-        {/* Step Counter */}
         <div className="text-center mt-4">
           <p className="text-sm text-gray-500">
             Step {currentStep} of {steps.length}
