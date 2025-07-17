@@ -37,7 +37,7 @@ const Dashboard = () => {
     };
     setCurrentDate(today.toLocaleDateString("en-US", options));
   }, []);
-  
+
   if (status === "loading") {
     return <div>Loading...</div>;
   }
@@ -231,11 +231,8 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Dashboard Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          {/* Quick Stats */}
           <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Stats Card */}
             <div className="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-2xl shadow-lg p-6 text-white">
               <h3 className="text-lg font-bold mb-4 flex items-center">
                 <FaChartLine className="mr-2" />
@@ -269,7 +266,6 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Quick Actions */}
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
                 <FiPlus className="text-indigo-600 mr-2" />
@@ -292,7 +288,6 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Notifications */}
           <div className="space-y-6">
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
               <div className="flex items-center justify-between mb-4">
@@ -333,7 +328,6 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Recent Forum Activity & Resources */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
             <div className="flex items-center justify-between mb-6">
@@ -383,7 +377,6 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Recommended Resources */}
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center">
@@ -428,7 +421,6 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Upcoming Events */}
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-8">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center">
@@ -465,7 +457,6 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* My Notes Section */}
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center">

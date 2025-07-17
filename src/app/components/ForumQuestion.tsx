@@ -82,7 +82,6 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
 
     setIsPosting(true);
 
-    // Simulate posting process
     setTimeout(() => {
       setPostComplete(true);
       setIsPosting(false);
@@ -108,7 +107,6 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black/50 bg-opacity-50 backdrop-blur flex items-center justify-center z-50 p-5 overflow-y-auto">
       <div className="bg-[#F8FAFC] dark:bg-gray-800 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-600 max-w-2xl w-full p-8 relative animate-in fade-in slide-in-from-bottom-4 duration-300 my-8">
-        {/* Close Button */}
         <button
           onClick={handleClose}
           className="absolute top-4 right-4 text-black dark:text-gray-400 hover:text-gray-200 hover:bg-gray-700 p-2 rounded-lg transition-all duration-200"
@@ -118,7 +116,6 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
 
         {!postComplete ? (
           <>
-            {/* Header */}
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-black dark:text-[#5B5F97] mb-2">
                 Ask a Question
@@ -128,9 +125,7 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
               </p>
             </div>
 
-            {/* Form */}
             <div className="space-y-6">
-              {/* Title Input */}
               <div>
                 <label className="block text-sm font-semibold text-black dark:text-gray-300 mb-2">
                   Question Title <span className="text-red-500">*</span>
@@ -153,7 +148,6 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
                   </span>
                 </div>
               </div>
-              {/* Description Textarea */}
               <div>
                 <label className="block text-sm font-semibold text-black dark:text-gray-300 mb-2">
                   Description <span className="text-red-500">*</span>
@@ -174,7 +168,6 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
                   </span>
                 </div>
               </div>
-              {/* Tags Section */}
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <label className="text-sm font-semibold text-black dark:text-gray-300">
@@ -204,7 +197,6 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
                   </div>
                 )}
 
-                {/* Tag Input */}
                 {postData.tags.length < 5 && (
                   <div className="flex gap-2">
                     <input
@@ -231,7 +223,6 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
                   </div>
                 )}
               </div>
-              {/* AI Tagging Option */}
               <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-lg p-4">
                 <div className="flex items-center gap-3">
                   <div className="flex items-center">
@@ -287,7 +278,6 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
               </div>
             </div>
 
-            {/* Action Buttons */}
             <div className="flex gap-3 justify-end mt-8">
               <button
                 onClick={handleClose}
@@ -312,7 +302,6 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
             </div>
           </>
         ) : (
-          /* Success State */
           <div className="text-center py-12">
             <div className="w-20 h-20 mx-auto mb-6 bg-[#10B981] rounded-full flex items-center justify-center">
               <IoCheckmarkCircle size={40} className="text-white" />

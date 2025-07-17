@@ -1,4 +1,3 @@
-// components/SessionGuard.tsx
 "use client";
 import { useSession } from "next-auth/react";
 import Loader from "../components/RocketLoader";

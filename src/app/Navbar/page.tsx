@@ -1,4 +1,3 @@
-// components/Navbar.tsx
 "use client";
 import { useState, useEffect } from "react";
 import { IoMdMenu } from "react-icons/io";
@@ -48,16 +47,18 @@ export default function Navbar() {
 
             <div className="flex items-center space-x-4">
               <div className="relative group">
-                <Image
-                  src={
-                    session?.user?.image ||
-                    "https://avatars.githubusercontent.com/u/96125015?v=4"
-                  }
-                  alt="User Avatar"
-                  width={40}
-                  height={40}
-                  className="h-10 w-10 rounded-full border-2hover:border-purple-400 transition-all duration-300 cursor-pointer"
-                />
+                <Link href="/profile">
+                  <Image
+                    src={
+                      session?.user?.image ||
+                      "https://avatars.githubusercontent.com/u/96125015?v=4"
+                    }
+                    alt="User Avatar"
+                    width={40}
+                    height={40}
+                    className="h-10 w-10 rounded-full border-2hover:border-purple-400 transition-all duration-300 cursor-pointer"
+                  />
+                </Link>
               </div>
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}

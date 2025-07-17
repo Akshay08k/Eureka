@@ -4,7 +4,7 @@ import "./globals.css";
 import { Providers } from "./lib/Providers";
 import Navbar from "./Navbar/page";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/Auth"; // adjust path if needed
+import { authOptions } from "@/app/lib/Auth";
 import SessionGuard from "./lib/SessionWrapper";
 import { Analytics } from "@vercel/analytics/next";
 const geist = Geist({

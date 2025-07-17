@@ -255,7 +255,6 @@ const FileUpload: React.FC<FileUploadPopupProps> = ({ isOpen, onClose }) => {
               </div>
             )}
 
-            {/* Action Buttons */}
             <div className="flex gap-3 justify-end">
               <button
                 onClick={handleClose}
@@ -273,7 +272,6 @@ const FileUpload: React.FC<FileUploadPopupProps> = ({ isOpen, onClose }) => {
             </div>
           </>
         ) : (
-          /* Success State */
           <div className="text-center py-6">
             <div className="w-16 h-16 mx-auto mb-4 bg-[#10B981] rounded-full flex items-center justify-center">
               <IoCheckmarkCircle size={32} className="text-white" />
@@ -297,5 +295,4 @@ const FileUpload: React.FC<FileUploadPopupProps> = ({ isOpen, onClose }) => {
   );
 };
 
-// Demo Component
 export default FileUpload;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FiChevronLeft, FiTag, FiHeart, FiArrowUp } from "react-icons/fi";
 
 const ThreadDetail: React.FC<{
-  thread: any; //ForumThread;
+  thread: any; //ForumThread[];
   onBack: () => void;
 }> = ({ thread, onBack }) => {
   const [newReply, setNewReply] = useState("");
@@ -31,7 +31,6 @@ const ThreadDetail: React.FC<{
   const handleSubmitReply = (e: React.FormEvent) => {
     e.preventDefault();
     if (newReply.trim()) {
-      // Handle reply submission
       setNewReply("");
     }
   };
@@ -46,7 +45,6 @@ const ThreadDetail: React.FC<{
         Back to Forum
       </button>
 
-      {/* Original Post */}
       <div className="bg-white text-black dark:text-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200  dark:border-gray-700 p-6 mb-6">
         <div className="flex items-start justify-between mb-4">
           <h1 className="text-2xl font-bold text-black dark:text-white">
@@ -108,7 +106,6 @@ const ThreadDetail: React.FC<{
         </div>
       </div>
 
-      {/* Replies */}
       <div className="space-y-4 mb-8">
         <h2 className="text-lg font-semibold text-black dark:text-white  ">
           {replies.length} {replies.length === 1 ? "Reply" : "Replies"}
@@ -163,7 +160,6 @@ const ThreadDetail: React.FC<{
         ))}
       </div>
 
-      {/* Reply Form */}
       <div className="bg-white  dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6">
         <h3 className="text-lg font-semibold text-black dark:text-white mb-4">
           Add a Reply

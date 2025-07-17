@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import {
   FiUser,
-  FiMail,
   FiBookOpen,
   FiSettings,
   FiEdit3,
@@ -22,7 +21,7 @@ interface UserData {
   email: string;
   role: "student" | "faculty" | "admin";
   image?: string;
-  onboarding: {
+  gettingStarted: {
     completed: boolean;
     currentStep: number;
   };
@@ -62,7 +61,7 @@ const EurekaOnboarding: React.FC = () => {
     name: "",
     email: "",
     role: "student",
-    onboarding: {
+    gettingStarted: {
       completed: false,
       currentStep: 1,
     },
@@ -185,7 +184,7 @@ const EurekaOnboarding: React.FC = () => {
 
   const saveProgress = () => {
     console.log("Saving progress...", { userData, userProfile });
-    // Here you would typically send data to your backend
+    //will send the data to backend
   };
 
   const nextStep = () => {
@@ -193,8 +192,8 @@ const EurekaOnboarding: React.FC = () => {
       setCurrentStep((prev) => prev + 1);
       setUserData((prev) => ({
         ...prev,
-        onboarding: {
-          ...prev.onboarding,
+        gettingStarted: {
+          ...prev.gettingStarted,
           currentStep: currentStep + 1,
         },
       }));
@@ -207,8 +206,8 @@ const EurekaOnboarding: React.FC = () => {
       setCurrentStep((prev) => prev - 1);
       setUserData((prev) => ({
         ...prev,
-        onboarding: {
-          ...prev.onboarding,
+        gettingStarted: {
+          ...prev.gettingStarted,
           currentStep: currentStep - 1,
         },
       }));
@@ -218,13 +217,13 @@ const EurekaOnboarding: React.FC = () => {
   const completeOnboarding = () => {
     setUserData((prev) => ({
       ...prev,
-      onboarding: {
-        ...prev.onboarding,
+      gettingStarted: {
+        ...prev.gettingStarted,
         completed: true,
       },
     }));
     console.log("Onboarding completed!", { userData, userProfile });
-    // Here you would typically redirect to the main app
+    //call back to main app where you started getting starteed
   };
 
   const isStepValid = () => {
@@ -256,7 +255,7 @@ const EurekaOnboarding: React.FC = () => {
   };
 
   const renderProgressBar = () => (
-    <div className="w-full bg-gray-200 rounded-full h-2 mb-8">
+    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-8">
       <div
         className="bg-indigo-600 h-2 rounded-full transition-all duration-300"
         style={{ width: `${(currentStep / steps.length) * 100}%` }}
@@ -792,15 +791,12 @@ const EurekaOnboarding: React.FC = () => {
   const currentStepData = steps[currentStep - 1];
 
   return (
-    <div className="min-h-screen bg-white p-4">
+    <div className="min-h-screen bg-white dark:bg-gray-900 pt-32">
       <div className="max-w-2xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-indigo-600 mb-2">Eureka</h1>
-          <p className="text-gray-600">Academic Collaboration Platform</p>
+        <div className="text-2xl font-bold text-gray-900 mb-6 text-center dark:text-white">
+          Getting Started
         </div>
 
-        {/* Progress Bar */}
         {renderProgressBar()}
 
         {/* Step Indicator */}
@@ -835,31 +831,32 @@ const EurekaOnboarding: React.FC = () => {
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-8">
-          {/* Step Header */}
+        <div className="bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 shadow-sm p-8">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <currentStepData.icon className="text-indigo-600" size={32} />
+            <div className="w-16 h-16 bg-indigo-100 dark:bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <currentStepData.icon
+                className="text-indigo-600 dark:text-white"
+                size={32}
+              />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               {currentStepData.title}
             </h2>
-            <p className="text-gray-600">{currentStepData.description}</p>
+            <p className="text-gray-600 dark:text-gray-400">
+              {currentStepData.description}
+            </p>
           </div>
 
-          {/* Step Content */}
           <div className="mb-8">{renderStepContent()}</div>
 
-          {/* Navigation */}
           <div className="flex justify-between items-center">
             <button
               onClick={prevStep}
               disabled={currentStep === 1}
               className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${
                 currentStep === 1
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  ? "bg-gray-100 dark:bg-indigo-600 text-gray-400 dark:text-indigo-300 cursor-not-allowed invisible"
+                  : "bg-gray-100 dark:bg-indigo-600 text-gray-700 dark:text-indigo-300 hover:bg-gray-200"
               }`}
             >
               <FiArrowLeft size={20} />
@@ -873,7 +870,7 @@ const EurekaOnboarding: React.FC = () => {
                 className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${
                   isStepValid()
                     ? "bg-indigo-600 text-white hover:bg-purple-600"
-                    : "bg-gray-100 text-gray-400 cursor-not-allowed"
+                    : "bg-gray-100 dark:bg-gray-500  text-gray-400 dark:text-gray-600 cursor-not-allowed"
                 }`}
               >
                 Next
