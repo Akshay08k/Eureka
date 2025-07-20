@@ -18,6 +18,7 @@ import {
   FiInfo,
 } from "react-icons/fi";
 import { FaGraduationCap } from "react-icons/fa";
+import Link from "next/link";
 interface UserData {
   name: string;
   email: string;
@@ -786,12 +787,19 @@ const EurekaOnboarding: React.FC = () => {
         return (
           <div className="text-center space-y-6">
             <div>
-              <div className="bg-indigo-50 p-4 rounded-lg">
-                <h4 className="text-xl font-semibold text-black mb-2">
+              <div className="bg-gray-400 dark:bg-gray-600 p-4 rounded-lg">
+                <h4 className="text-xl font-bold  text-black dark:text-gray-200 mb-2">
                   Next Steps
                 </h4>
-                <ul className="text-sm text-black space-y-1">
-                  <li>Explore the community and find like-minded academics</li>
+                <ul className="text-sm text-black dark:text-gray-300 space-y-1">
+                  <li>
+                    Explore the
+                    <Link href="/communities" className="text-indigo-400">
+                      {" "}
+                      Communities{" "}
+                    </Link>
+                    page to join Community and find like-minded academics
+                  </li>
                   <li> Join discussion groups related to your interests</li>
                   <li> Start or participate in collaborative projects</li>
                   <li> Share your knowledge and learn from others</li>

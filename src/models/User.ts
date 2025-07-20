@@ -1,3 +1,4 @@
+import generateRandomUsername from "@/utils/GenRandomUsername";
 import mongoose, { Schema, model, models } from "mongoose";
 const onBoardingSchema = new Schema(
   {
@@ -8,7 +9,7 @@ const onBoardingSchema = new Schema(
 );
 const UserSchema = new Schema(
   {
-    username: { type: String, unique: true },
+    username: { type: String, unique: true  },
     //display name
     name: { type: String },
     email: { type: String, unique: true },

@@ -12,6 +12,7 @@ import { FaMoon, FaSun } from "react-icons/fa";
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { data: session } = useSession();
+
   const { theme, setTheme } = useTheme();
 
   const navLinks = [
@@ -51,7 +52,7 @@ export default function Navbar() {
                   <Image
                     src={
                       session?.user?.image ||
-                      "https://avatars.githubusercontent.com/u/96125015?v=4"
+                      "/avatar.png"
                     }
                     alt="User Avatar"
                     width={40}

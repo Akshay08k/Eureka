@@ -2,6 +2,7 @@ import { hash } from "bcrypt";
 import User from "@/models/User";
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/app/lib/dbCon";
+import generateRandomUsername from "@/utils/GenRandomUsername";
 export async function POST(req: NextRequest) {
   try {
     await connectDB();
@@ -27,7 +28,8 @@ export async function POST(req: NextRequest) {
     const hashedPassword = await hash(password, 12);
 
     const user = await User.create({
-      username,
+      username: generateRandomUsername(),
+      name: username,
       email,
       password: hashedPassword,
     });

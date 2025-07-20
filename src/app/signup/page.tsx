@@ -22,9 +22,9 @@ export default function SignupPage() {
       setLoading(true);
       const res = await axios.post("/api/auth/register", formData);
       const data = res.data;
-
-      if (res.status !== 200) {
-        throw new Error(data.message || "Something went wrong!");
+      console.log(res);
+      if (res.status != 200) {
+        router.push("/signin");
       }
 
       const loginRes = await signIn("credentials", {
@@ -32,7 +32,6 @@ export default function SignupPage() {
         email: formData.email,
         password: formData.password,
       });
-
       if (loginRes?.ok) {
         router.push("/");
       } else {

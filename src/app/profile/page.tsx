@@ -11,8 +11,8 @@ import { FiMenu } from "react-icons/fi";
 const initialUserInfo = {
   avatar:
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  fullName: "John Doe",
   username: "johndoe",
+  name: "John Doe",
   email: "john@example.com",
   bio: "Full-stack developer passionate about creating amazing user experiences. Love working with React, Node.js, and modern web technologies.",
   phone: "+1 (555) 123-4567",
@@ -31,10 +31,9 @@ const initialNotifications = {
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState("profile");
   const [isEditing, setIsEditing] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [userInfo, setUserInfo] = useState(initialUserInfo);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [notifications, setNotifications] = useState(initialNotifications);
-
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   const renderContent = () => {

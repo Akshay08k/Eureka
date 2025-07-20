@@ -1,7 +1,13 @@
+"use client";
 import { FaHandsHelping } from "react-icons/fa";
 import { FiEdit3, FiCamera, FiX, FiUser, FiSave } from "react-icons/fi";
-import StatCard from "./StateCard";
+import { useSession } from "next-auth/react";
 import { BiSolidVector } from "react-icons/bi";
+import { useEffect } from "react";
+//components
+import StatCard from "./StateCard";
+import { set } from "mongoose";
+import { formatJoinDate } from "@/utils/FormatDate";
 const ProfileOverview = ({
   userInfo,
   setUserInfo,
@@ -11,11 +17,40 @@ const ProfileOverview = ({
   const handleSaveProfile = () => {
     setIsEditing(false);
   };
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (
+      session?.user?.image ||
+      session?.user?.name ||
+      session?.user?.username
+    ) {
+      setUserInfo((prev: any) => ({
+        ...prev,
+        avatar: session?.user?.image || "/avatar.png",
+      }));
+      setUserInfo((prev: any) => ({ ...prev, fullName: session?.user?.name }));
+      setUserInfo((prev: any) => ({
+        ...prev,
+        username: session?.user?.username || undefined,
+      }));
+
+      setUserInfo((prev: any) => ({
+        ...prev,
+        joinDate: session?.user?.createdAt
+          ? formatJoinDate(session.user.createdAt)
+          : undefined,
+      }));
+      setUserInfo((prev: any) => ({
+        ...prev,
+        bio: session?.user?.bio || "There is no bio",
+      }));
+    }
+  }, [session]);
 
   const handleCancelEdit = () => {
     setIsEditing(false);
   };
-
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -23,7 +58,7 @@ const ProfileOverview = ({
           <h2 className="text-2xl lg:text-3xl font-bold text-black dark:text-white">
             Profile Overview
           </h2>
-          <p className="text-gray-400  mt-1">
+          <p className="text-gray-400 mt-1">
             Manage your public profile information
           </p>
         </div>
@@ -38,7 +73,6 @@ const ProfileOverview = ({
 
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 lg:p-8">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Avatar Section */}
           <div className="flex-shrink-0 flex flex-col items-center lg:items-start">
             <div className="relative group">
               <div className="w-32 h-32 lg:w-40 lg:h-40 rounded-full  border-4 border-gray-500 ">
@@ -49,12 +83,33 @@ const ProfileOverview = ({
                 />
               </div>
               {isEditing && (
-                <button
-                  className="absolute bg-black text-white bottom-2 right-2 p-3 rounded-full dark:bg-white dark:text-black 
-                 transition-all duration-200 transform hover:scale-110 shadow-lg"
-                >
-                  <FiCamera className="w-5 h-5 " />
-                </button>
+                <>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="avatarUpload"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        const imageUrl = URL.createObjectURL(file);
+                        setUserInfo((prev: any) => ({
+                          ...prev,
+                          avatar: imageUrl,
+                        }));
+                      }
+                    }}
+                  />
+                  <button
+                    onClick={() =>
+                      document.getElementById("avatarUpload")?.click()
+                    }
+                    className="absolute bg-black text-white bottom-2 right-2 p-3 rounded-full dark:bg-white dark:text-black 
+      transition-all duration-200 transform hover:scale-110 shadow-lg"
+                  >
+                    <FiCamera className="w-5 h-5" />
+                  </button>
+                </>
               )}
             </div>
             <div className="mt-4 text-center lg:text-left">
@@ -86,7 +141,7 @@ const ProfileOverview = ({
                     className="w-full px-4 py-3 border rounded-xl resize-none transition-all duration-200 border-gray-500 outline-none"
                   />
                 ) : (
-                  <p className="text-lg text-gray-800 dark:text-gray-400">
+                  <p className="text-sm text-gray-800 dark:text-gray-400">
                     {userInfo.fullName}
                   </p>
                 )}
@@ -109,7 +164,7 @@ const ProfileOverview = ({
                     className="w-full px-4 py-3 border rounded-xl transition-all duration-200 border-gray-500  outline-none"
                   />
                 ) : (
-                  <p className="text-lg text-gray-800 dark:text-gray-400">
+                  <p className="text-sm text-gray-800 dark:text-gray-400">
                     @{userInfo.username}
                   </p>
                 )}
@@ -134,7 +189,7 @@ const ProfileOverview = ({
                   placeholder="Tell us about yourself..."
                 />
               ) : (
-                <p className="text-lg text-gray-800 dark:text-gray-400">
+                <p className="text-sm text-gray-800 dark:text-gray-400">
                   {userInfo.bio}
                 </p>
               )}

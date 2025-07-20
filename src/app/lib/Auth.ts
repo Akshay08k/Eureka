@@ -43,12 +43,15 @@ export const authOptions: AuthOptions = {
           throw new Error("Invalid password");
         }
 
+        console.log("Authorized user:", user);
         return {
           id: user._id.toString(),
           name: user.name,
+          username: user.username,
           email: user.email,
           role: user.role,
           image: user.image,
+          createdAt: user.createdAt,
         };
       },
     }),
@@ -65,17 +68,21 @@ export const authOptions: AuthOptions = {
       if (user) {
         token.id = user.id;
         token.name = user.name;
+        token.username = user.username;
         token.picture = user.image;
         token.role = user.role;
+        token.createdAt = user.createdAt;
       }
       return token;
     },
     session: async ({ session, token }: any) => {
       if (session.user) {
         session.user.id = token.id;
-        session.image = token.image;
+        session.user.username = token.username;
+        session.user.image = token.image;
         session.user.role = token.role;
         session.user.image = token.picture;
+        session.user.createdAt = token.createdAt;
       }
       return session;
     },
