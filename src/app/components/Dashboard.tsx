@@ -22,10 +22,14 @@ import {
   FaQuestionCircle,
   FaStickyNote,
 } from "react-icons/fa";
+import ForumQuestion from "./ForumQuestion";
+import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
   const [currentDate, setCurrentDate] = useState("");
   const { data: session, status } = useSession();
+  const [isQuestionBoxOpen, setIsQuestionBoxOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const today = new Date();
@@ -187,20 +191,21 @@ const Dashboard = () => {
   return (
     <div className="bg-[#F8FAFC] dark:bg-gray-900 min-h-screen pt-26 pb-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-[1200px] mx-auto">
-        {/* Welcome Section */}
         <div className="mb-8">
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 sm:p-8">
             <div className="flex items-center justify-between flex-wrap gap-4">
               <div className="flex items-center space-x-4">
-                <div className="">
-                  <Image
-                    src={session?.user?.image || "/avatar.png"}
-                    alt="User Avatar"
-                    width={40}
-                    height={40}
-                    className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg ring-2 ring-indigo-500/20"
-                  />
-                </div>
+                <ForumQuestion
+                  isOpen={isQuestionBoxOpen}
+                  onClose={() => setIsQuestionBoxOpen(false)}
+                />
+                <Image
+                  src={session?.user?.image || "/avatar.png"}
+                  alt="User Avatar"
+                  width={40}
+                  height={40}
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg ring-2 ring-indigo-500/20"
+                />
                 <div>
                   <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
                     Welcome back, {session?.user?.name || "User(Not Logged In)"}{" "}
@@ -272,7 +277,10 @@ const Dashboard = () => {
                 Quick Actions
               </h3>
               <div className="space-y-3">
-                <button className="w-full bg-indigo-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 flex items-center justify-center">
+                <button
+                  onClick={() => setIsQuestionBoxOpen(true)}
+                  className="w-full bg-indigo-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 flex items-center justify-center"
+                >
                   <FaQuestionCircle className="mr-2" />
                   Ask Question
                 </button>
@@ -280,7 +288,12 @@ const Dashboard = () => {
                   <FaStickyNote className="mr-2" />
                   New Note
                 </button>
-                <button className="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 flex items-center justify-center border border-gray-300 dark:border-gray-600">
+                <button
+                  onClick={() => {
+                    router.push("/resources");
+                  }}
+                  className="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 flex items-center justify-center border border-gray-300 dark:border-gray-600"
+                >
                   <FiSearch className="mr-2" />
                   Browse Resources
                 </button>

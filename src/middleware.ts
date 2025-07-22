@@ -34,5 +34,6 @@ export const config = {
     "/forums/:slug*",
     "/resources/:slug*",
     "/roadmaps/:slug*",
+    "/test/:slug*",
   ],
 };
