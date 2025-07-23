@@ -106,7 +106,7 @@ const ForumQuestion: React.FC<ForumQuestionProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 bg-opacity-50 backdrop-blur flex items-center justify-center z-50 p-5 overflow-y-auto">
-      <div className="bg-[#F8FAFC] dark:bg-gray-800 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-600 max-w-2xl w-full p-8 relative animate-in fade-in slide-in-from-bottom-4 duration-300 my-8">
+      <div className="bg-[#F8FAFC] dark:bg-gray-800 rounded-3xl shadow-2xl  max-w-2xl w-full p-8 relative animate-in fade-in slide-in-from-bottom-4 duration-300 my-8">
         <button
           onClick={handleClose}
           className="absolute top-4 right-4 text-black dark:text-gray-400 hover:text-gray-200 hover:bg-gray-700 p-2 rounded-lg transition-all duration-200"

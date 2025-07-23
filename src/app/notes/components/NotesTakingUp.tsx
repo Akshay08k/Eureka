@@ -38,8 +38,8 @@ const NotePopup: React.FC<NotePopupProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 animate-fadeIn">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden animate-slideIn">
+    <div className="fixed inset-0  backdrop-blur flex items-center justify-center p-4 z-50 animate-fadeIn ">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden animate-slideIn ">
         <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
             {editingNote ? "Edit Note" : "Create New Note"}
@@ -54,7 +54,7 @@ const NotePopup: React.FC<NotePopupProps> = ({
 
         <div className="p-6 space-y-4 max-h-[60vh] overflow-y-auto">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 text-left">
               Title
             </label>
             <input
@@ -67,7 +67,7 @@ const NotePopup: React.FC<NotePopupProps> = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 text-left">
               Content
             </label>
             <NoteEditor
@@ -99,6 +99,5 @@ const NotePopup: React.FC<NotePopupProps> = ({
     </div>
   );
 };
-
 
 export default NotePopup;

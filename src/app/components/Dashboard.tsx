@@ -23,12 +23,14 @@ import {
   FaStickyNote,
 } from "react-icons/fa";
 import ForumQuestion from "./ForumQuestion";
+import NotePopup from "../notes/components/NotesTakingUp";
 import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
   const [currentDate, setCurrentDate] = useState("");
   const { data: session, status } = useSession();
   const [isQuestionBoxOpen, setIsQuestionBoxOpen] = useState(false);
+  const [NotePopupOpen, setNotePopupOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -284,7 +286,10 @@ const Dashboard = () => {
                   <FaQuestionCircle className="mr-2" />
                   Ask Question
                 </button>
-                <button className="w-full bg-indigo-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 flex items-center justify-center">
+                <button
+                  onClick={() => setNotePopupOpen(true)}
+                  className="w-full bg-indigo-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 flex items-center justify-center"
+                >
                   <FaStickyNote className="mr-2" />
                   New Note
                 </button>
@@ -348,7 +353,10 @@ const Dashboard = () => {
                 <FiMessageSquare className="text-indigo-600 mr-3" />
                 Recent Forum Activity
               </h2>
-              <button className="bg-indigo-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center shadow-lg">
+              <button
+                onClick={() => setIsQuestionBoxOpen(true)}
+                className="bg-indigo-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center shadow-lg"
+              >
                 <FaQuestionCircle className="mr-2" />
                 Ask Question
               </button>
@@ -440,7 +448,12 @@ const Dashboard = () => {
               <FiCalendar className="text-indigo-600 mr-3" />
               Upcoming Events
             </h2>
-            <button className="text-indigo-600 hover:text-purple-700 transition-colors text-sm font-medium">
+            <button
+              className="text-indigo-600 hover:text-purple-700 transition-colors text-sm font-medium"
+              onClick={() => {
+                router.push("/events");
+              }}
+            >
               View Calendar
             </button>
           </div>
@@ -477,10 +490,16 @@ const Dashboard = () => {
               My Notes
             </h2>
             <div className="flex items-center space-x-3">
-              <button className="text-indigo-600 hover:text-purple-700 transition-colors text-sm font-medium">
+              <button
+                className="text-indigo-600 hover:text-purple-700 transition-colors text-sm font-medium"
+                onClick={() => router.push("/notes")}
+              >
                 View All
               </button>
-              <button className="bg-indigo-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center shadow-lg">
+              <button
+                onClick={() => setNotePopupOpen(true)}
+                className="bg-indigo-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center shadow-lg"
+              >
                 <FiPlus className="mr-2" />
                 New Note
               </button>
@@ -523,10 +542,21 @@ const Dashboard = () => {
           </div>
 
           <div className="mt-6 text-center">
-            <button className="w-full py-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl text-gray-600 dark:text-gray-400 hover:border-indigo-500 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 flex items-center justify-center space-x-2">
+            <button
+              onClick={() => setNotePopupOpen(true)}
+              className="w-full py-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl text-gray-600 dark:text-gray-400 hover:border-indigo-500 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 flex items-center justify-center space-x-2"
+            >
               <FiPlus />
               <span>Create New Note</span>
             </button>
+            <NotePopup
+              isOpen={NotePopupOpen}
+              onClose={() => setNotePopupOpen(false)}
+              onSave={() => {
+                router.push("/notes");
+              }}
+              editingNote={undefined}
+            />
           </div>
         </div>
       </div>
