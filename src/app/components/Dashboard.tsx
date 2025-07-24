@@ -21,6 +21,7 @@ import {
   FaChartLine,
   FaQuestionCircle,
   FaStickyNote,
+  FaCalendar,
 } from "react-icons/fa";
 import ForumQuestion from "./ForumQuestion";
 import NotePopup from "../notes/components/NotesTakingUp";
@@ -292,6 +293,13 @@ const Dashboard = () => {
                 >
                   <FaStickyNote className="mr-2" />
                   New Note
+                </button>
+                <button
+                  onClick={() => router.push("/events")}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 flex items-center justify-center"
+                >
+                  <FaCalendar className="mr-2" />
+                  View Events
                 </button>
                 <button
                   onClick={() => {

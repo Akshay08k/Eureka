@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { MdNoteAdd, MdDarkMode, MdLightMode } from "react-icons/md";
+import { MdNoteAdd } from "react-icons/md";
 import { Note } from "../../../types";
 import NotesPage from "./components/Notes";
 import NoteViewer from "./components/NoteViewer";
@@ -89,7 +89,7 @@ const NotesApp: React.FC = () => {
 
   return (
     <div className={isDarkMode ? "dark" : ""}>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors pt-28">
         <div className="container mx-auto px-4 py-8 max-w-6xl">
           <div className="flex items-center justify-between mb-8">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
@@ -97,20 +97,6 @@ const NotesApp: React.FC = () => {
             </h1>
 
             <div className="flex items-center gap-3">
-              <button
-                onClick={toggleDarkMode}
-                className="p-2 rounded-lg bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all border border-gray-200 dark:border-gray-700"
-                title={
-                  isDarkMode ? "Switch to light mode" : "Switch to dark mode"
-                }
-              >
-                {isDarkMode ? (
-                  <MdLightMode className="text-yellow-500" size={20} />
-                ) : (
-                  <MdDarkMode className="text-gray-700" size={20} />
-                )}
-              </button>
-
               {currentView === "list" && (
                 <button
                   onClick={openNewNote}

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaArrowUp, FaHeart } from "react-icons/fa";
 import { FiChevronLeft, FiTag, FiHeart, FiArrowUp } from "react-icons/fi";
 
 const ThreadDetail: React.FC<{
@@ -6,6 +7,8 @@ const ThreadDetail: React.FC<{
   onBack: () => void;
 }> = ({ thread, onBack }) => {
   const [newReply, setNewReply] = useState("");
+  const [isThreadLiked, setIsThreadLiked] = useState(false);
+  const [isThreadUpvoted, setIsThreadUpvoted] = useState(false);
   const [replies] = useState<any[]>([
     // reply
     {
@@ -36,7 +39,7 @@ const ThreadDetail: React.FC<{
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-black">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-black pt-14">
       <button
         onClick={onBack}
         className="inline-flex items-center text-purple-400 hover:text-indigo-400 transition-colors mb-6"
@@ -82,25 +85,41 @@ const ThreadDetail: React.FC<{
             />
             <div>
               <p className="text-sm font-medium text-black dark:text-white">
-                {thread.author.name}
+                {thread.author.name || "Anonymous"}
               </p>
               <p
                 className="text-xs text-gray-900 
               dark:text-gray-400"
               >
-                Posted 2 days ago
+                Posted (thread.uptime) days ago
               </p>
             </div>
           </div>
 
           <div className="flex items-center space-x-4">
-            <button className="flex items-center text-gray-800 dark:text-gray-400 hover:text-red-400 transition-colors">
-              <FiHeart className="w-4 h-4 mr-1" />
-              {thread.likes}
+            <button
+              className="flex items-center text-gray-800 dark:text-gray-400  transition-colors"
+              onClick={() => setIsThreadLiked(!isThreadLiked)}
+            >
+              {isThreadLiked ? (
+                <FaHeart className="w-5 h-5 mr-1 text-red-500 fill-red-500 transition-all duration-300 transform scale-110" />
+              ) : (
+                <FaHeart className="w-5 h-5 mr-1 text-gray-400 transition-all duration-300 hover:scale-105" />
+              )}
+              <span>{thread.likes}</span>
             </button>
-            <button className="flex items-center text-gray-800 dark:text-gray-400 hover:text-purple-400 transition-colors">
-              <FiArrowUp className="w-4 h-4 mr-1" />
-              Upvote
+            <button
+              onClick={() => setIsThreadUpvoted(!isThreadUpvoted)}
+              className="flex items-center text-gray-800 dark:text-gray-400 transition-colors"
+            >
+              {isThreadUpvoted ? (
+                <FaArrowUp className="w-6 h-6 mr-1 text-green-500 fill-green-500 transition-all duration-600 transform scale-110 " />
+              ) : (
+                <FaArrowUp className="w-6 h-6 mr-1 text-gray-400 transition-all duration-300 hover:scale-105" />
+              )}
+              <span className={`${isThreadUpvoted ? "text-green-500" : ""}`}>
+                {isThreadUpvoted ? "Upvoted" : "Upvote"}
+              </span>
             </button>
           </div>
         </div>
@@ -129,10 +148,10 @@ const ThreadDetail: React.FC<{
                 />
                 <div>
                   <p className="text-sm font-medium text-black dark:text-white">
-                    {reply.author.name}
+                    {reply.author.name || "Anonymous"}
                   </p>
                   <p className="text-xs text-gray-900    dark:text-gray-400">
-                    1 day ago
+                    (reply.createdAt) day ago
                   </p>
                 </div>
               </div>

@@ -208,7 +208,7 @@ const ForumPage: React.FC = () => {
           Threads={sampleThreads}
         />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 ">
           <div className="space-y-4">
             {paginatedThreads.map((thread) => (
               <ThreadCard
@@ -222,10 +222,10 @@ const ForumPage: React.FC = () => {
           {filteredThreads.length === 0 && (
             <div className="text-center py-12">
               <FiMessageSquare className="w-12 h-12 text-gray-600  dark:text-white mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-white dark:text-black mb-2">
+              <h3 className="text-lg font-medium text-white dark:text-whit mb-2">
                 No discussions found
               </h3>
-              <p className="text-gray-400 dark:text-black">
+              <p className="text-gray-400 dark:text-gray-400">
                 Try adjusting your filters or be the first to ask a question!
               </p>
             </div>
