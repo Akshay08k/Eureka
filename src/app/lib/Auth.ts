@@ -43,7 +43,7 @@ export const authOptions: AuthOptions = {
           throw new Error("Invalid password");
         }
 
-        console.log("Authorized user:", user);
+        // console.log("Authorized user:", user);
         return {
           id: user._id.toString(),
           name: user.name,

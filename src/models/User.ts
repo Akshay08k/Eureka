@@ -1,5 +1,5 @@
-import generateRandomUsername from "@/utils/GenRandomUsername";
 import mongoose, { Schema, model, models } from "mongoose";
+
 const onBoardingSchema = new Schema(
   {
     completed: { type: Boolean, default: false },
@@ -9,9 +9,10 @@ const onBoardingSchema = new Schema(
 );
 const UserSchema = new Schema(
   {
-    username: { type: String, unique: true  },
+    username: { type: String, unique: true },
     //display name
     name: { type: String },
+    bio: { type: String },
     email: { type: String, unique: true },
     password: { type: String, required: true },
     image: { type: String },
@@ -20,6 +21,17 @@ const UserSchema = new Schema(
       enum: ["student", "faculty", "admin"],
       default: "student",
     },
+    phone: { type: String },
+    followers: { type: Number },
+    problemSolvedCount: { type: Number },
+    contributions: { type: Number },
+
+    location: { type: String },
+    websiteLink: { type: String },
+    githubUrl: { type: String },
+    linkedinUrl: { type: String },
+    twitterUrl: { type: String },
+    portfolioUrl: { type: String },
     onboarding: { type: onBoardingSchema, default: () => ({}) },
   },
   { timestamps: true }

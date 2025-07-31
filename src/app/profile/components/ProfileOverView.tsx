@@ -1,52 +1,44 @@
 "use client";
 import { FaHandsHelping } from "react-icons/fa";
 import { FiEdit3, FiCamera, FiX, FiUser, FiSave } from "react-icons/fi";
-import { useSession } from "next-auth/react";
 import { BiSolidVector } from "react-icons/bi";
-import { useEffect } from "react";
 //components
 import StatCard from "./StateCard";
-import { set } from "mongoose";
 import { formatJoinDate } from "@/utils/FormatDate";
 const ProfileOverview = ({
   userInfo,
   setUserInfo,
   isEditing,
   setIsEditing,
+  handleSaveProfile,
 }: any) => {
-  const handleSaveProfile = () => {
-    setIsEditing(false);
-  };
-  const { data: session } = useSession();
+  //   if (
+  //     session?.user?.image ||
+  //     session?.user?.name ||
+  //     session?.user?.username
+  //   ) {
+  //     setUserInfo((prev: any) => ({
+  //       ...prev,
+  //       avatar: session?.user?.image || "/avatar.png",
+  //     }));
+  //     setUserInfo((prev: any) => ({ ...prev, fullName: session?.user?.name }));
+  //     setUserInfo((prev: any) => ({
+  //       ...prev,
+  //       username: session?.user?.username || undefined,
+  //     }));
 
-  useEffect(() => {
-    if (
-      session?.user?.image ||
-      session?.user?.name ||
-      session?.user?.username
-    ) {
-      setUserInfo((prev: any) => ({
-        ...prev,
-        avatar: session?.user?.image || "/avatar.png",
-      }));
-      setUserInfo((prev: any) => ({ ...prev, fullName: session?.user?.name }));
-      setUserInfo((prev: any) => ({
-        ...prev,
-        username: session?.user?.username || undefined,
-      }));
-
-      setUserInfo((prev: any) => ({
-        ...prev,
-        joinDate: session?.user?.createdAt
-          ? formatJoinDate(session.user.createdAt)
-          : undefined,
-      }));
-      setUserInfo((prev: any) => ({
-        ...prev,
-        bio: session?.user?.bio || "There is no bio",
-      }));
-    }
-  }, [session]);
+  //     setUserInfo((prev: any) => ({
+  //       ...prev,
+  //       joinDate: session?.user?.createdAt
+  //         ? formatJoinDate(session?.user?.createdAt)
+  //         : undefined,
+  //     }));
+  //     setUserInfo((prev: any) => ({
+  //       ...prev,
+  //       bio: session?.user?.bio || "There is no bio",
+  //     }));
+  //   }
+  // }, [session]);
 
   const handleCancelEdit = () => {
     setIsEditing(false);
@@ -77,8 +69,8 @@ const ProfileOverview = ({
             <div className="relative group">
               <div className="w-32 h-32 lg:w-40 lg:h-40 rounded-full  border-4 border-gray-500 ">
                 <img
-                  src={userInfo.avatar}
-                  alt={userInfo.fullName}
+                  src={userInfo.image}
+                  alt={userInfo.name}
                   className="w-full h-full rounded-full object-cover border-4 border-white"
                 />
               </div>
@@ -117,7 +109,8 @@ const ProfileOverview = ({
                 className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium"
                 style={{ backgroundColor: "#6C63FF20", color: "#5B5F97" }}
               >
-                Member since {userInfo.joinDate}
+                Member since{" "}
+                {userInfo.createdAt && formatJoinDate(userInfo.createdAt)}
               </div>
             </div>
           </div>
@@ -131,18 +124,18 @@ const ProfileOverview = ({
                 {isEditing ? (
                   <input
                     type="text"
-                    value={userInfo.fullName}
+                    value={userInfo.name}
                     onChange={(e) =>
                       setUserInfo((prev: any) => ({
                         ...prev,
-                        fullName: e.target.value,
+                        name: e.target.value,
                       }))
                     }
                     className="w-full px-4 py-3 border rounded-xl resize-none transition-all duration-200 border-gray-500 outline-none"
                   />
                 ) : (
                   <p className="text-sm text-gray-800 dark:text-gray-400">
-                    {userInfo.fullName}
+                    {userInfo.name}
                   </p>
                 )}
               </div>
@@ -219,16 +212,21 @@ const ProfileOverview = ({
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <StatCard title="Followers" value="24" icon={FiUser} color="#6C63FF" />
+        <StatCard
+          title="Followers"
+          value={userInfo.followers}
+          icon={FiUser}
+          color="#6C63FF"
+        />
         <StatCard
           title="Contributions"
-          value="1234"
+          value={userInfo.contributions}
           icon={FaHandsHelping}
           color="#5B5F97"
         />
         <StatCard
           title="Solved Problems"
-          value="567"
+          value={userInfo.problemSolvedCount}
           icon={BiSolidVector}
           color="#10B981"
         />

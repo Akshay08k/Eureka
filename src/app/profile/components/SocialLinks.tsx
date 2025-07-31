@@ -3,14 +3,7 @@ import { FaGithub, FaTwitter, FaLinkedin, FaGlobe } from "react-icons/fa6";
 import { useState } from "react";
 import InputField from "./InputField";
 
-const SocialLinks = () => {
-  const [links, setLinks] = useState({
-    github: "",
-    twitter: "",
-    linkedin: "",
-    website: "",
-  });
-
+const SocialLinks = ({ userInfo, setUserInfo, handleSave }: any) => {
   return (
     <div className="space-y-6">
       <div>
@@ -27,19 +20,19 @@ const SocialLinks = () => {
           <InputField
             label="GitHub"
             type="url"
-            value={links.github}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setLinks((prev) => ({ ...prev, github: e.target.value }))
-            }
+            value={userInfo.githubUrl}
             placeholder="https://github.com/username"
+            onChange={(e: any) =>
+              setUserInfo({ ...userInfo, githubUrl: e.target.value })
+            }
             icon={FaGithub}
           />
           <InputField
             label="Twitter"
             type="url"
-            value={links.twitter}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setLinks((prev) => ({ ...prev, twitter: e.target.value }))
+            value={userInfo.twitterUrl}
+            onChange={(e: any) =>
+              setUserInfo({ ...userInfo, twitterUrl: e.target.value })
             }
             placeholder="https://twitter.com/username"
             icon={FaTwitter}
@@ -47,9 +40,9 @@ const SocialLinks = () => {
           <InputField
             label="LinkedIn"
             type="url"
-            value={links.linkedin}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setLinks((prev) => ({ ...prev, linkedin: e.target.value }))
+            value={userInfo.linkedinUrl}
+            onChange={(e: any) =>
+              setUserInfo({ ...userInfo, linkedinUrl: e.target.value })
             }
             placeholder="https://linkedin.com/in/username"
             icon={FaLinkedin}
@@ -57,9 +50,9 @@ const SocialLinks = () => {
           <InputField
             label="Portfolio"
             type="url"
-            value={links.website}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setLinks((prev) => ({ ...prev, website: e.target.value }))
+            value={userInfo.portfolioUrl}
+            onChange={(e: any) =>
+              setUserInfo({ ...userInfo, portfolioUrl: e.target.value })
             }
             placeholder="https://yourportfolio.com"
             icon={FaGlobe}
@@ -70,6 +63,7 @@ const SocialLinks = () => {
           <button
             className="flex items-center px-6 py-3 text-white rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
             style={{ backgroundColor: "#6C63FF" }}
+            onClick={handleSave}
           >
             <FiSave className="w-4 h-4 mr-2" />
             Save Social Links

@@ -7,7 +7,7 @@ import {
 } from "react-icons/fi";
 import InputField from "./InputField";
 
-const PersonalDetails = ({ userInfo, setUserInfo }: any) => {
+const PersonalDetails = ({ userInfo, setUserInfo, handleSave }: any) => {
   return (
     <div className="space-y-6">
       <div>
@@ -57,7 +57,7 @@ const PersonalDetails = ({ userInfo, setUserInfo }: any) => {
           <InputField
             label="Website"
             type="url"
-            value={userInfo.website}
+            value={userInfo.websiteLink}
             onChange={(e: { target: { value: any } }) =>
               setUserInfo((prev: any) => ({ ...prev, website: e.target.value }))
             }
@@ -70,6 +70,7 @@ const PersonalDetails = ({ userInfo, setUserInfo }: any) => {
           <button
             className="flex items-center px-6 py-3 text-white rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
             style={{ backgroundColor: "#6C63FF" }}
+            onClick={handleSave}
           >
             <FiSave className="w-4 h-4 mr-2" />
             Save Changes

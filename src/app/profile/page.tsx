@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProfileOverview from "./components/ProfileOverView";
 import SecuritySettings from "./components/SecuritySettings";
 import NotificationSettings from "./components/Notifcation";
@@ -7,20 +7,11 @@ import SocialLinks from "./components/SocialLinks";
 import PersonalDetails from "./components/PersonalDetails";
 import Sidebar from "./components/Sidebar";
 import { FiMenu } from "react-icons/fi";
-
-const initialUserInfo = {
-  avatar:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  username: "johndoe",
-  name: "John Doe",
-  email: "john@example.com",
-  bio: "Full-stack developer passionate about creating amazing user experiences. Love working with React, Node.js, and modern web technologies.",
-  phone: "+1 (555) 123-4567",
-  location: "San Francisco, CA",
-  website: "https://johndoe.dev",
-  verified: true,
-  joinDate: "2022",
-};
+import axios from "@/app/lib/axios";
+import { User } from "../../../types";
+import Loader from "../components/RocketLoader";
+import { useRouter, useSearchParams } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
 
 const initialNotifications = {
   email: true,
@@ -29,12 +20,61 @@ const initialNotifications = {
 };
 
 const ProfilePage = () => {
-  const [activeTab, setActiveTab] = useState("profile");
+  const searchParams = useSearchParams();
+  const tabFromUrl = searchParams.get("tab");
+  const [activeTab, setActiveTab] = useState(tabFromUrl || "profile");
+
   const [isEditing, setIsEditing] = useState(false);
-  const [userInfo, setUserInfo] = useState(initialUserInfo);
+  const [userInfo, setUserInfo] = useState<User>();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [notifications, setNotifications] = useState(initialNotifications);
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
+
+  const router = useRouter();
+
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("tab", tab);
+    router.replace(`?${params.toString()}`);
+  };
+
+  useEffect(() => {
+    axios
+      .get("/api/user/me")
+      .then((res) => {
+        console.log("User data:", res.data);
+        setUserInfo(res.data);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch user:", err);
+      });
+  }, []);
+
+  const handleSave = async () => {
+    try {
+      const res = await axios.put("/api/user/update", userInfo);
+      if (res.status === 200) {
+        toast.success("Profile updated successfully", {
+          duration: 700,
+          position: "top-center",
+        });
+        setIsEditing(false);
+      } else {
+        toast.error("Failed to update profile", {
+          duration: 2000,
+          position: "top-center",
+        });
+      }
+    } catch (error) {
+      console.error("Failed to update profile:", error);
+    }
+  };
+
+  if (!userInfo) {
+    return <Loader />;
+  }
 
   const renderContent = () => {
     switch (activeTab) {
@@ -45,11 +85,16 @@ const ProfilePage = () => {
             setUserInfo={setUserInfo}
             isEditing={isEditing}
             setIsEditing={setIsEditing}
+            handleSaveProfile={handleSave}
           />
         );
       case "personal":
         return (
-          <PersonalDetails userInfo={userInfo} setUserInfo={setUserInfo} />
+          <PersonalDetails
+            userInfo={userInfo}
+            setUserInfo={setUserInfo}
+            handleSave={handleSave}
+          />
         );
       case "security":
         return <SecuritySettings />;
@@ -61,7 +106,13 @@ const ProfilePage = () => {
           />
         );
       case "social":
-        return <SocialLinks />;
+        return (
+          <SocialLinks
+            userInfo={userInfo}
+            setUserInfo={setUserInfo}
+            handleSave={handleSave}
+          />
+        );
       default:
         return (
           <ProfileOverview
@@ -83,10 +134,11 @@ const ProfilePage = () => {
         />
       )}
 
+      <Toaster />
       <div className="flex">
         <Sidebar
           activeTab={activeTab}
-          setActiveTab={setActiveTab}
+          setActiveTab={handleTabChange}
           isMobileMenuOpen={isMobileMenuOpen}
           closeMobileMenu={closeMobileMenu}
         />
